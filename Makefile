@@ -12,7 +12,7 @@ BONUS_OBJS_DIR := bonus_objects
 INC_DIR := include 
 CFLAGS = -Wall -Wextra -Werror -g3
 UNAME := $(shell uname)
-LIBS := -lft -lmx
+LIBS := -lft -lmlx
 LIB_DIRS := $(LIBFT_DIR)
 
 # ifeq ($(UNAME), Darwin)
