@@ -1,7 +1,7 @@
 .PHONY: all clean fclean re log bonus libft builtin_test
 
 CC = clang
-NAME = minishell
+NAME = cub3d
 # NAME_BONUS = .minishell_bonus.txt
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
@@ -12,7 +12,7 @@ BONUS_OBJS_DIR := bonus_objects
 INC_DIR := include 
 CFLAGS = -Wall -Wextra -Werror -g3
 UNAME := $(shell uname)
-LIBS := -lft -lmlx
+LIBS := -lft -lmlx -lm
 LIB_DIRS := $(LIBFT_DIR)
 
 # ifeq ($(UNAME), Darwin)
@@ -59,7 +59,7 @@ $(NAME): $(OBJS) | libft
 
 $(OBJS_DIR)/%.o: $(MANDATORY_DIR)/%.c
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(INC_DIR) -I/usr/local/include -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(INC_DIR) -c $< -o $@
 
 # $(BONUS_OBJS_DIR)/%.o: $(BONUS_DIR)/%.c
 # 	@mkdir -p $(@D)

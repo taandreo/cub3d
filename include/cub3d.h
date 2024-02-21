@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/19 21:18:28 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/02/20 23:22:20 by tairribe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 # include <stdlib.h>
 # include <stdio.h>
-# include mlx.h
+# include <mlx.h>
+# include <math.h>
+# include "libft.h"
+# include "ft_printf.h"
 
 #endif
