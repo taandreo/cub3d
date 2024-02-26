@@ -12,7 +12,7 @@ BONUS_OBJS_DIR := bonus_objects
 INC_DIR := include 
 CFLAGS = -Wall -Wextra -Werror -g3
 UNAME := $(shell uname)
-LIBS := -lft -lmlx -lm
+LIBS := -lft -lmlx -lm -lX11 -lXext
 LIB_DIRS := $(LIBFT_DIR)
 
 # ifeq ($(UNAME), Darwin)
@@ -21,7 +21,9 @@ LIB_DIRS := $(LIBFT_DIR)
 # 	LIB_DIRS += -L /opt/homebrew/opt/readline/lib
 # endif
 
-SRCS = $(addprefix $(MANDATORY_DIR)/, cub3d.c)
+SRCS = $(addprefix $(MANDATORY_DIR)/, cub3d.c\
+					mlx.c\
+					render.c)
 
 # BONUS = $(addprefix $(BONUS_DIR)/, minishell_bonus.c\
 			
