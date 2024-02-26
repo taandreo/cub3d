@@ -15,55 +15,61 @@ int render(t_map_data *map_data)
 
 void init_player(t_map_data *map_data)
 {
-	map_data->player.x = (WINDOW_WIDTH / 2);
-	map_data->player.y = (WINDOW_HEIGHT / 2);
-	map_data->player.height = 5;
-	map_data->player.width = 5;
+	int i;
+	int j;
+
+	i = 0;
+	while (map_data->map[i])
+	{
+		j = 0;
+		while (map_data->map[i][j])
+		{
+			if (ft_isalpha(map_data->map[i][j]))
+			{
+				map_data->player.y = (i * map_data->scale_factor) + (map_data->scale_factor / 2);
+				map_data->player.x = (j * map_data->scale_factor) + (map_data->scale_factor / 2);
+				map_data->player.height = 5;
+				map_data->player.width = 5;
+				return;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
-void render_square_map(t_map_data *map_data, int x, int y, char *value)
+void put_color_pixel(t_map_data *map_data, int x, int y, int color)
 {
 	int i;
 	int j;
 
 	i = y;
-	if (ft_strcmp(value, "1") == 0)
+	while (i < y + map_data->scale_factor)
 	{
-		while (i < y + MAP_OFFSET)
-		{
-			j = x;
-			while (j < x + MAP_OFFSET)
-				img_pixel_put(&map_data->img, j++, i, 0xFFFFFF);
-			i++;
-		}
+		j = x;
+		while (j < x + map_data->scale_factor)
+			img_pixel_put(&map_data->img, j++, i, color);
+		i++;
 	}
+}
+
+void render_square_map(t_map_data *map_data, int x, int y, char *value)
+{
+	if (!value)
+		put_color_pixel(map_data, x, y, BLACK_PIXEL);
+	else if (ft_strcmp(value, "1") == 0)
+		put_color_pixel(map_data, x, y, WHITE_PIXEL);
 	else if (ft_strcmp(value, "0") == 0)
-	{
-		while (i < y + MAP_OFFSET)
-		{
-			j = x;
-			while (j < x + MAP_OFFSET)
-				img_pixel_put(&map_data->img, j++, i, 0x000000);
-			i++;
-		}
-	}
+		put_color_pixel(map_data, x, y, BLACK_PIXEL);
 	else if (ft_strcmp(value, " ") == 0)
-	{
-		while (i < y + MAP_OFFSET)
-		{
-			j = x;
-			while (j < x + MAP_OFFSET)
-				img_pixel_put(&map_data->img, j++, i, 0xAAAAAA);
-			i++;
-		}
-	}
+		put_color_pixel(map_data, x, y, GRAY_PIXEL);
 }
 void render_map(t_map_data *map_data)
 {
 	int x;
 	int y;
-	int xo;
-	int yo;
+	int x0;
+	int y0;
 
 	y = 0;
 	while (map_data->map[y])
@@ -71,14 +77,16 @@ void render_map(t_map_data *map_data)
 		x = 0;
 		while (map_data->map[y][x])
 		{
-			yo = y * MAP_OFFSET;
-			xo = x * MAP_OFFSET;
+			y0 = y * map_data->scale_factor;
+			x0 = x * map_data->scale_factor;
 			if (map_data->map[y][x] == '1')
-				render_square_map(map_data, xo, yo, "1");
+				render_square_map(map_data, x0, y0, "1");
 			else if (map_data->map[y][x] == '0')
-				render_square_map(map_data, xo, yo, "0");
+				render_square_map(map_data, x0, y0, "0");
 			else if (map_data->map[y][x] == ' ')
-				render_square_map(map_data, xo, yo, " ");
+				render_square_map(map_data, x0, y0, " ");
+			else if (ft_isalpha(map_data->map[y][x]))
+				render_square_map(map_data, x0, y0, NULL);
 			x++;
 		}
 		y++;

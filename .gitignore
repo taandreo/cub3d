@@ -5,4 +5,4 @@ cub3d
 compile_commands.json
 .cache/
 .clang-format
-
+.idea/

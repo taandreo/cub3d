@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 00:35:58 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:45:11 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@ void map_sample(t_map_data *map_data)
 	char *gnl;
 	int map_rows;
 	int i;
+	int max_column;
 
 	fd = open("test.cub", O_RDONLY);
+	map_data->max_columns = 0;
 	gnl = get_next_line(fd);
 	map_rows = 0;
 	while (gnl)
 	{
 		map_rows++;
+		max_column = ft_strlen(ft_strtrim(gnl, "\n"));
+		if (max_column > map_data->max_columns)
+			map_data->max_columns = max_column;
 		gnl = get_next_line(fd);
 	}
 	close(fd);
@@ -41,6 +46,11 @@ void map_sample(t_map_data *map_data)
 		gnl = get_next_line(fd);
 	}
 	map_data->map_rows = map_rows;
+	if (map_data->map_rows >= map_data->max_columns)
+		map_data->scale_factor = WINDOW_HEIGHT / map_data->map_rows;
+	else
+		map_data->scale_factor = WINDOW_WIDTH / map_data->max_columns;
+	close(fd);
 }
 
 int main(void)

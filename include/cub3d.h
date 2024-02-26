@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 01:23:02 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:37:06 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@
 #define STRUCTURE_NOTIFY_MASK 131072
 // Player Color
 #define RED_PIXEL 0xFF0000
+#define BLACK_PIXEL 0x000000
+#define WHITE_PIXEL 0xFFFFFF
+#define GRAY_PIXEL 0x777777
 
 typedef struct t_player
 {
@@ -69,6 +72,8 @@ typedef struct s_map_data
 	t_img img;
 	char **map;
 	int map_rows;
+	int max_columns;
+	int scale_factor;
 } t_map_data;
 
 void initialize_mlx(t_map_data *map_data);
