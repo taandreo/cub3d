@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 00:14:29 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 01:23:02 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // Window Params
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 900
-#define MAP_OFFSET 64
+#define MAP_OFFSET 36
 // Mlx Error
 #define MLX_ERROR 1
 // Mlx Key Symbol

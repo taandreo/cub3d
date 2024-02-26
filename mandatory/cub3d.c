@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 00:18:33 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:35:58 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void map_sample(t_map_data *map_data)
 		gnl = get_next_line(fd);
 	}
 	close(fd);
-	map_data->map = malloc(map_rows * sizeof(char *));
+	map_data->map = malloc((map_rows + 1) * sizeof(char *));
+	map_data->map[map_rows] = NULL;
 	fd = open("test.cub", O_RDONLY);
 	gnl = get_next_line(fd);
 	i = 0;
