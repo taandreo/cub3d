@@ -4,11 +4,13 @@
 void img_pixel_put(t_img *img, int x, int y, int color);
 void render_player(t_map_data *map_data);
 void render_map(t_map_data *map_data);
+void render_player_view(t_map_data *map_data);
 
 int render(t_map_data *map_data)
 {
 	render_map(map_data);
 	render_player(map_data);
+	render_player_view(map_data);
 	mlx_put_image_to_window(map_data->mlx_ptr, map_data->win_ptr, map_data->img.mlx_img, 0, 0);
 	return 0;
 }
@@ -30,6 +32,9 @@ void init_player(t_map_data *map_data)
 				map_data->player.x = (j * map_data->scale_factor) + (map_data->scale_factor / 2);
 				map_data->player.height = 5;
 				map_data->player.width = 5;
+				map_data->player.pa = (3 * PI) / 2;
+				map_data->player.pdx = cos(map_data->player.pa) * 5;
+				map_data->player.pdy = sin(map_data->player.pa) * 5;
 				return;
 			}
 			j++;
@@ -103,9 +108,22 @@ void render_player(t_map_data *map_data)
 	{
 		j = map_data->player.x;
 		while (j < map_data->player.x + map_data->player.width)
-		{
 			img_pixel_put(&map_data->img, j++, i, RED_PIXEL);
-		}
+		i++;
+	}
+}
+
+void render_player_view(t_map_data *map_data)
+{
+	int i;
+	int j;
+
+	i = map_data->player.y;
+	while (i < map_data->player.y + 10)
+	{
+		j = map_data->player.x;
+		while (j < map_data->player.x + 5)
+			img_pixel_put(&map_data->img, j++ + map_data->player.pdx, i + map_data->player.pdy, RED_PIXEL);
 		i++;
 	}
 }

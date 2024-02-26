@@ -17,21 +17,49 @@ int handle_keyrelease(int keysym, t_map_data *map_data)
 
 int handle_keypress(int keysym, t_map_data *map_data)
 {
+	if (keysym == XK_LEFT)
+	{
+		map_data->player.pa -= 0.1;
+		if (map_data->player.pa < 0)
+		{
+			map_data->player.pa += 2 * PI;
+		}
+		map_data->player.pdx = cos(map_data->player.pa) * 5;
+		map_data->player.pdy = sin(map_data->player.pa) * 5;
+	}
+	if (keysym == XK_RIGHT)
+	{
+		map_data->player.pa += 0.1;
+		if (map_data->player.pa > 2 * PI)
+		{
+			map_data->player.pa -= 2 * PI;
+		}
+		map_data->player.pdx = cos(map_data->player.pa) * 5;
+		map_data->player.pdy = sin(map_data->player.pa) * 5;
+	}
 	if (keysym == XK_W)
 	{
-		map_data->player.y -= 5;
+		map_data->player.y += map_data->player.pdy;
+		map_data->player.x += map_data->player.pdx;
 	}
 	if (keysym == XK_A)
 	{
-		map_data->player.x -= 5;
+		if (!map_data->player.pdx)
+			map_data->player.x -= 5;
+		else
+			map_data->player.x -= map_data->player.pdx;
 	}
 	if (keysym == XK_S)
 	{
-		map_data->player.y += 5;
+		map_data->player.x -= map_data->player.pdx;
+		map_data->player.y -= map_data->player.pdy;
 	}
 	if (keysym == XK_D)
 	{
-		map_data->player.x += 5;
+		if (!map_data->player.pdx)
+			map_data->player.x += 5;
+		else
+			map_data->player.x += map_data->player.pdx;
 	}
 	return (0);
 }

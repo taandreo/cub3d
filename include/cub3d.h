@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 13:37:06 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:18:43 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 #define XK_A 0x61
 #define XK_S 0x73
 #define XK_D 0x64
+#define XK_RIGHT 0xff53
+#define XK_LEFT 0xff51
 // Mlx Events
 #define KEY_RELEASE 3
 #define KEY_PRESS 2
@@ -46,13 +48,20 @@
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
 #define GRAY_PIXEL 0x777777
+// Value of PI
+#define PI 3.14159265
+#define PI3 PI / 3
+#define PI4 PI / 4
 
 typedef struct t_player
 {
-	int x;
-	int y;
-	int height;
-	int width;
+	double x;
+	double y;
+	double pdx;
+	double pdy;
+	double pa;
+	double height;
+	double width;
 } t_player;
 
 typedef struct s_img
@@ -73,7 +82,7 @@ typedef struct s_map_data
 	char **map;
 	int map_rows;
 	int max_columns;
-	int scale_factor;
+	double scale_factor;
 } t_map_data;
 
 void initialize_mlx(t_map_data *map_data);
