@@ -15,6 +15,23 @@ int handle_keyrelease(int keysym, t_map_data *map_data)
 	return (0);
 }
 
+void calculate_strafe(t_map_data *map_data, int keysym)
+{
+	float strafe_angle;
+	float dx;
+	float dy;
+
+	if (keysym == XK_A)
+		strafe_angle = map_data->player.pa - PI / 2;
+	if (keysym == XK_D)
+		strafe_angle = map_data->player.pa + PI / 2;
+	dx = cos(strafe_angle) * 5;
+	dy = sin(strafe_angle) * 5;
+
+	map_data->player.x += dx;
+	map_data->player.y += dy;
+}
+
 int handle_keypress(int keysym, t_map_data *map_data)
 {
 	if (keysym == XK_LEFT)
@@ -42,24 +59,12 @@ int handle_keypress(int keysym, t_map_data *map_data)
 		map_data->player.y += map_data->player.pdy;
 		map_data->player.x += map_data->player.pdx;
 	}
-	if (keysym == XK_A)
-	{
-		if (!map_data->player.pdx)
-			map_data->player.x -= 5;
-		else
-			map_data->player.x -= map_data->player.pdx;
-	}
+	if (keysym == XK_A || keysym == XK_D)
+		calculate_strafe(map_data, keysym);
 	if (keysym == XK_S)
 	{
 		map_data->player.x -= map_data->player.pdx;
 		map_data->player.y -= map_data->player.pdy;
-	}
-	if (keysym == XK_D)
-	{
-		if (!map_data->player.pdx)
-			map_data->player.x += 5;
-		else
-			map_data->player.x += map_data->player.pdx;
 	}
 	return (0);
 }

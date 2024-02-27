@@ -1,7 +1,6 @@
 #include "cub3d.h"
 #include <mlx.h>
 
-void img_pixel_put(t_img *img, int x, int y, int color);
 void render_player(t_map_data *map_data);
 void render_map(t_map_data *map_data);
 void render_player_view(t_map_data *map_data);
@@ -115,17 +114,7 @@ void render_player(t_map_data *map_data)
 
 void render_player_view(t_map_data *map_data)
 {
-	int i;
-	int j;
-
-	i = map_data->player.y;
-	while (i < map_data->player.y + 10)
-	{
-		j = map_data->player.x;
-		while (j < map_data->player.x + 5)
-			img_pixel_put(&map_data->img, j++ + map_data->player.pdx, i + map_data->player.pdy, RED_PIXEL);
-		i++;
-	}
+	draw_line(map_data, RED_PIXEL);
 }
 
 void img_pixel_put(t_img *img, int x, int y, int color)

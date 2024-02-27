@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 17:18:43 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:28:04 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,29 @@ typedef struct s_map_data
 	double scale_factor;
 } t_map_data;
 
+typedef struct s_bresenham
+{
+	int x0;
+	int y0;
+	int x;
+	int y;
+	int inc_x;
+	int inc_y;
+	int dx;
+	int dy;
+	int abs_dx;
+	int abs_dy;
+	int pk;
+} t_bresenham;
+
 void initialize_mlx(t_map_data *map_data);
 int handle_mouse(t_map_data *map_data);
 int handle_keyrelease(int keysym, t_map_data *map_data);
 int render(t_map_data *map_data);
 void init_player(t_map_data *map_data);
 int handle_keypress(int keysym, t_map_data *map_data);
+float ft_abs(float value);
+void draw_line(t_map_data *map_data, int color);
+void img_pixel_put(t_img *img, int x, int y, int color);
 
 #endif

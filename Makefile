@@ -23,7 +23,8 @@ LIB_DIRS := $(LIBFT_DIR)
 
 SRCS = $(addprefix $(MANDATORY_DIR)/, cub3d.c\
 					mlx.c\
-					render.c)
+					render.c\
+					draw.c)
 
 # BONUS = $(addprefix $(BONUS_DIR)/, minishell_bonus.c\
 			
