@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/27 03:11:42 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/27 07:55:47 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ typedef struct t_player
 {
 	double x;
 	double y;
-	double pdx;
-	double pdy;
-	double pa;
+	double dirX;
+	double dirY;
+	double planeX;
+	double planeY;
 	double height;
 	double width;
 } t_player;
