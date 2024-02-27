@@ -3,7 +3,7 @@
 static void put_x(t_bresenham *bre, t_map_data *map_data, int color);
 static void put_y(t_bresenham *bre, t_map_data *map_data, int color);
 
-void draw_line(t_map_data *map_data, int color)
+void draw_line(t_map_data *map_data, double x_end, double y_end, int color)
 {
 	t_bresenham bre;
 
@@ -11,8 +11,8 @@ void draw_line(t_map_data *map_data, int color)
 	bre.y0 = map_data->player.y;
 	bre.inc_x = 1;
 	bre.inc_y = 1;
-	bre.dx = (bre.x0 + cos(map_data->player.pa) * 15) - bre.x0;
-	bre.dy = (bre.y0 + sin(map_data->player.pa) * 15) - bre.y0;
+	bre.dx = x_end - bre.x0;
+	bre.dy = y_end - bre.y0;
 	bre.abs_dx = ft_abs(bre.dx);
 	bre.abs_dy = ft_abs(bre.dy);
 	if (bre.dx < 0)

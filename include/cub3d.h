@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 20:28:04 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/27 03:11:42 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,16 @@
 #define STRUCTURE_NOTIFY_MASK 131072
 // Player Color
 #define RED_PIXEL 0xFF0000
+#define GREEN_PIXEL 0x00FF00
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
 #define GRAY_PIXEL 0x777777
 // Value of PI
 #define PI 3.14159265
-#define PI3 PI / 3
-#define PI4 PI / 4
+#define EPSILON 0.00001
+#define MY_DBL_EPSILON 1e-9
+#define PI270 (3 * PI) / 2
+#define PI90 PI / 2
 
 typedef struct t_player
 {
@@ -100,6 +103,24 @@ typedef struct s_bresenham
 	int pk;
 } t_bresenham;
 
+typedef struct s_rays
+{
+	int r;
+	int mx;
+	int my;
+	int hx;
+	int hy;
+	int vx;
+	int vy;
+	int mp;
+	int dof;
+	double rx;
+	double ry;
+	double ra;
+	double xo;
+	double yo;
+} t_rays;
+
 void initialize_mlx(t_map_data *map_data);
 int handle_mouse(t_map_data *map_data);
 int handle_keyrelease(int keysym, t_map_data *map_data);
@@ -107,7 +128,8 @@ int render(t_map_data *map_data);
 void init_player(t_map_data *map_data);
 int handle_keypress(int keysym, t_map_data *map_data);
 float ft_abs(float value);
-void draw_line(t_map_data *map_data, int color);
+void draw_line(t_map_data *map_data, double x_end, double y_end, int color);
 void img_pixel_put(t_img *img, int x, int y, int color);
+int is_parallel_to_x_axis(double angle);
 
 #endif
