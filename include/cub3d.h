@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/27 07:55:47 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:13:26 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
 #define GRAY_PIXEL 0x777777
+#define CEILING_COLOR 0xAAAAAA
+#define FLOOR_COLOR 0x555555
 // Value of PI
 #define PI 3.14159265
 #define EPSILON 0.00001
@@ -60,10 +62,10 @@ typedef struct t_player
 {
 	double x;
 	double y;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
 	double height;
 	double width;
 } t_player;
@@ -106,20 +108,24 @@ typedef struct s_bresenham
 
 typedef struct s_rays
 {
-	int r;
-	int mx;
-	int my;
-	int hx;
-	int hy;
-	int vx;
-	int vy;
-	int mp;
-	int dof;
-	double rx;
-	double ry;
-	double ra;
-	double xo;
-	double yo;
+	double camera_x;
+	double ray_dir_x;
+	double ray_dir_y;
+	double delta_dist_x;
+	double delta_dist_y;
+	double side_dist_x;
+	double side_dist_y;
+	double perp_wall_dist;
+	int map_x;
+	int map_y;
+	int step_x;
+	int step_y;
+	int hit;
+	int side;
+	int line_height;
+	int draw_start;
+	int draw_end;
+
 } t_rays;
 
 void initialize_mlx(t_map_data *map_data);

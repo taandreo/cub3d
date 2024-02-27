@@ -15,56 +15,94 @@ int handle_keyrelease(int keysym, t_map_data *map_data)
 	return (0);
 }
 
-void calculate_strafe(t_map_data *map_data, int keysym)
+void calculate_strafe(t_map_data *map_data, int keysym, double move_speed)
 {
-	float strafe_angle;
-	float dx;
-	float dy;
+	double new_x;
+	double new_y;
+	double new_x_d;
+	double new_y_d;
 
 	if (keysym == XK_A)
-		strafe_angle = map_data->player.pa - PI / 2;
+	{
+		new_x = map_data->player.x - map_data->player.plane_x * move_speed;
+		new_y = map_data->player.y - map_data->player.plane_y * move_speed;
+		if (map_data->map[(int)new_x][(int)map_data->player.y] == '0' &&
+			map_data->map[(int)map_data->player.x][(int)new_y] == '0')
+		{
+			map_data->player.x = new_x;
+			map_data->player.y = new_y;
+		}
+	}
 	if (keysym == XK_D)
-		strafe_angle = map_data->player.pa + PI / 2;
-	dx = cos(strafe_angle) * 5;
-	dy = sin(strafe_angle) * 5;
+	{
+		new_x_d = map_data->player.x + map_data->player.plane_x * move_speed;
+		new_y_d = map_data->player.y + map_data->player.plane_y * move_speed;
+		if (map_data->map[(int)new_x_d][(int)map_data->player.y] == '0' &&
+			map_data->map[(int)map_data->player.x][(int)new_y_d] == '0')
+		{
+			map_data->player.x = new_x_d;
+			map_data->player.y = new_y_d;
+		}
+	}
+}
 
-	map_data->player.x += dx;
-	map_data->player.y += dy;
+void rotate_right(t_map_data *map_data, double rotate_speed)
+{
+	double old_dir_x;
+	double old_plane_x;
+
+	old_dir_x = map_data->player.dir_x;
+	map_data->player.dir_x =
+			(map_data->player.dir_x * cos(-rotate_speed)) - (map_data->player.dir_y * sin(-rotate_speed));
+	map_data->player.dir_y = (old_dir_x * sin(-rotate_speed)) + (map_data->player.dir_y * cos(-rotate_speed));
+	old_plane_x = map_data->player.plane_x;
+	map_data->player.plane_x =
+			(map_data->player.plane_x * cos(-rotate_speed)) - (map_data->player.plane_y * sin(-rotate_speed));
+	map_data->player.plane_y = (old_plane_x * sin(-rotate_speed)) + (map_data->player.plane_y * cos(-rotate_speed));
+}
+
+void rotate_left(t_map_data *map_data, double rotate_speed)
+{
+	double old_dir_x;
+	double old_plane_x;
+
+	old_dir_x = map_data->player.dir_x;
+	map_data->player.dir_x =
+			(map_data->player.dir_x * cos(rotate_speed)) - (map_data->player.dir_y * sin(rotate_speed));
+	map_data->player.dir_y = (old_dir_x * sin(rotate_speed)) + (map_data->player.dir_y * cos(rotate_speed));
+	old_plane_x = map_data->player.plane_x;
+	map_data->player.plane_x =
+			(map_data->player.plane_x * cos(rotate_speed)) - (map_data->player.plane_y * sin(rotate_speed));
+	map_data->player.plane_y = (old_plane_x * sin(rotate_speed)) + (map_data->player.plane_y * cos(rotate_speed));
 }
 
 int handle_keypress(int keysym, t_map_data *map_data)
 {
+	double move_speed = 0.03 * 5.0;
+	double rotation_speed = 0.03 * 3.0;
 	if (keysym == XK_LEFT)
-	{
-		map_data->player.pa -= 0.1;
-		if (map_data->player.pa < 0)
-		{
-			map_data->player.pa += 2 * PI;
-		}
-		map_data->player.pdx = cos(map_data->player.pa) * 5;
-		map_data->player.pdy = sin(map_data->player.pa) * 5;
-	}
+		rotate_left(map_data, rotation_speed);
 	if (keysym == XK_RIGHT)
-	{
-		map_data->player.pa += 0.1;
-		if (map_data->player.pa > 2 * PI)
-		{
-			map_data->player.pa -= 2 * PI;
-		}
-		map_data->player.pdx = cos(map_data->player.pa) * 5;
-		map_data->player.pdy = sin(map_data->player.pa) * 5;
-	}
+		rotate_right(map_data, rotation_speed);
 	if (keysym == XK_W)
 	{
-		map_data->player.y += map_data->player.pdy;
-		map_data->player.x += map_data->player.pdx;
+		if (map_data->map[(int)(map_data->player.x + map_data->player.dir_x * move_speed)][(int)(map_data->player.y)] ==
+			'0')
+			map_data->player.x += map_data->player.dir_x * move_speed;
+		if (map_data->map[(int)(map_data->player.x)][(int)(map_data->player.y + map_data->player.dir_y * move_speed)] ==
+			'0')
+			map_data->player.y += map_data->player.dir_y * move_speed;
 	}
 	if (keysym == XK_A || keysym == XK_D)
-		calculate_strafe(map_data, keysym);
+		calculate_strafe(map_data, keysym, move_speed);
 	if (keysym == XK_S)
 	{
-		map_data->player.x -= map_data->player.pdx;
-		map_data->player.y -= map_data->player.pdy;
+		if (map_data->map[(int)(map_data->player.x - map_data->player.dir_x * move_speed)][(int)(map_data->player.y)] ==
+			'0')
+			map_data->player.x -= map_data->player.dir_x * move_speed;
+		if (map_data->map[(int)(map_data->player.x)][(int)(map_data->player.y - map_data->player.dir_y * move_speed)] ==
+			'0')
+			map_data->player.y -= map_data->player.dir_y * move_speed;
 	}
 	return (0);
 }
