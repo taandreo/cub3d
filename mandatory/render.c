@@ -97,7 +97,7 @@ void render_vectors(t_map_data *map_data)
 		else
 		{
 			rays.step_x = 1;
-			rays.side_dist_x = (map_data->player.x + 1.0 - rays.map_x) * rays.delta_dist_x;
+			rays.side_dist_x = (rays.map_x + 1.0 - map_data->player.x) * rays.delta_dist_x;
 		}
 		if (rays.ray_dir_y < 0)
 		{
@@ -107,7 +107,7 @@ void render_vectors(t_map_data *map_data)
 		else
 		{
 			rays.step_y = 1;
-			rays.side_dist_y = (map_data->player.y + 1.0 - rays.map_y) * rays.delta_dist_y;
+			rays.side_dist_y = (rays.map_y + 1.0 - map_data->player.y) * rays.delta_dist_y;
 		}
 		rays.hit = 0;
 		// DDA Line Algorithm
@@ -140,7 +140,10 @@ void render_vectors(t_map_data *map_data)
 		else
 			rays.perp_wall_dist = (rays.side_dist_y - rays.delta_dist_y);
 		// Height of Line to be drawn
-		rays.line_height = (int)(WINDOW_HEIGHT / rays.perp_wall_dist);
+		if (rays.perp_wall_dist == 0)
+			rays.line_height = WINDOW_WIDTH - 1;
+		else
+			rays.line_height = (int)(WINDOW_HEIGHT / rays.perp_wall_dist);
 		// calculate lowest and highest pixel to fill in current stripe
 		rays.draw_start = (-rays.line_height / 2) + (WINDOW_HEIGHT / 2);
 		if (rays.draw_start < 0)
@@ -176,7 +179,7 @@ void verLine_img(t_img *img, int x, int y1, int y2, int color)
 		return;// Line is out of bounds
 	if (y1 < 0)
 		y1 = 0;
-	if (y2 >= WINDOW_HEIGHT)
+	if (y2 >= WINDOW_WIDTH)
 		y2 = WINDOW_HEIGHT - 1;
 	int y;
 
