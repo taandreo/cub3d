@@ -47,14 +47,14 @@ void init_player(t_map_data *map_data)
 					map_data->player.dir_x = -1;
 					map_data->player.dir_y = 0;
 					map_data->player.plane_x = 0;
-					map_data->player.plane_y = 0.66;
+					map_data->player.plane_y = -0.66;
 				}
 				else if (map_data->map[i][j] == 'E')
 				{
 					map_data->player.dir_x = 1;
 					map_data->player.dir_y = 0;
 					map_data->player.plane_x = 0;
-					map_data->player.plane_y = -0.66;
+					map_data->player.plane_y = 0.66;
 				}
 				return;
 			}
@@ -145,21 +145,21 @@ void render_vectors(t_map_data *map_data)
 		else
 			rays.line_height = (int)(WINDOW_HEIGHT / rays.perp_wall_dist);
 		// calculate lowest and highest pixel to fill in current stripe
-		rays.draw_start = (-rays.line_height / 2) + (WINDOW_HEIGHT / 2);
-		if (rays.draw_start < 0)
-			rays.draw_start = 0;
-		rays.draw_end = (rays.line_height / 2) + (WINDOW_HEIGHT / 2);
-		if (rays.draw_end >= WINDOW_HEIGHT)
-			rays.draw_end = WINDOW_HEIGHT - 1;
+		rays.draw_end = (-rays.line_height / 2) + (WINDOW_HEIGHT / 2);
+		if (rays.draw_end < 0)
+			rays.draw_end = 0;
+		rays.draw_start = (rays.line_height / 2) + (WINDOW_HEIGHT / 2);
+		if (rays.draw_start >= WINDOW_HEIGHT)
+			rays.draw_start = WINDOW_HEIGHT - 1;
 		if (rays.side)
 			color = RED_PIXEL;
 		else
 			color = 0x990000;
-		verLine_img(&map_data->img, x, rays.draw_start, rays.draw_end, color);
+		verLine_img(&map_data->img, x, rays.draw_end, rays.draw_start, color);
 		// Ceiling from top of the screen to the start of the wall
-		verLine_img(&map_data->img, x, 0, rays.draw_start - 1, CEILING_COLOR);
+		verLine_img(&map_data->img, x, 0, rays.draw_end - 1, CEILING_COLOR);
 		// Floor from the end of the wall to the bottom of the screen
-		verLine_img(&map_data->img, x, rays.draw_end + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
+		verLine_img(&map_data->img, x, rays.draw_start + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
 		x++;
 	}
 }

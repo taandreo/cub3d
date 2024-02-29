@@ -50,7 +50,7 @@ void calculate_strafe(t_map_data *map_data, int keysym, double move_speed)
 	}
 }
 
-void rotate_right(t_map_data *map_data, double rotate_speed)
+void rotate_left(t_map_data *map_data, double rotate_speed)
 {
 	double old_dir_x;
 	double old_plane_x;
@@ -65,7 +65,7 @@ void rotate_right(t_map_data *map_data, double rotate_speed)
 	map_data->player.plane_y = (old_plane_x * sin(-rotate_speed)) + (map_data->player.plane_y * cos(-rotate_speed));
 }
 
-void rotate_left(t_map_data *map_data, double rotate_speed)
+void rotate_right(t_map_data *map_data, double rotate_speed)
 {
 	double old_dir_x;
 	double old_plane_x;
