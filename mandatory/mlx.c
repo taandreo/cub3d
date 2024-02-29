@@ -94,12 +94,12 @@ int handle_keypress(int keysym, t_map_data *map_data)
 					'0' ||
 			ft_isalpha(map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed)]
 									[(int)(map_data->player.x)]))
-			map_data->player.x += map_data->player.dir_x * move_speed;
+			map_data->player.y += map_data->player.dir_y * move_speed;
 		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x + map_data->player.dir_x * move_speed)] ==
 					'0' ||
 			ft_isalpha(map_data->map[(int)(map_data->player.y)]
 									[(int)(map_data->player.x + map_data->player.dir_x * move_speed)]))
-			map_data->player.y += map_data->player.dir_y * move_speed;
+			map_data->player.x += map_data->player.dir_x * move_speed;
 	}
 	if (keysym == XK_A || keysym == XK_D)
 		calculate_strafe(map_data, keysym, move_speed);
@@ -109,12 +109,12 @@ int handle_keypress(int keysym, t_map_data *map_data)
 					'0' ||
 			ft_isalpha(map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)]
 									[(int)(map_data->player.x)]))
-			map_data->player.x -= map_data->player.dir_x * move_speed;
+			map_data->player.y -= map_data->player.dir_y * move_speed;
 		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x - map_data->player.dir_x * move_speed)] ==
 					'0' ||
 			ft_isalpha(map_data->map[(int)(map_data->player.y)]
 									[(int)(map_data->player.x - map_data->player.dir_x * move_speed)]))
-			map_data->player.y -= map_data->player.dir_y * move_speed;
+			map_data->player.x -= map_data->player.dir_x * move_speed;
 	}
 	return (0);
 }
