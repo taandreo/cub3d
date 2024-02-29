@@ -125,13 +125,9 @@ void render_vectors(t_map_data *map_data)
 				rays.map_y += rays.step_y;
 				rays.side = 1;
 			}
-			if (rays.map_x >= 0 && rays.map_x < map_data->max_columns && rays.map_y >= 0 &&
-				rays.map_y < map_data->map_rows)
+			if (map_data->map[rays.map_y][rays.map_x] == '1')
 			{
-				if (map_data->map[rays.map_y][rays.map_x] == '1')
-				{
-					rays.hit = 1;
-				}
+				rays.hit = 1;
 			}
 		}
 		// Distance projected on camera direction
