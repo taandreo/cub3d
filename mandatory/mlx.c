@@ -26,8 +26,10 @@ void calculate_strafe(t_map_data *map_data, int keysym, double move_speed)
 	{
 		new_x = map_data->player.x - map_data->player.plane_x * move_speed;
 		new_y = map_data->player.y - map_data->player.plane_y * move_speed;
-		if (map_data->map[(int)new_x][(int)map_data->player.y] == '0' &&
-			map_data->map[(int)map_data->player.x][(int)new_y] == '0')
+		if ((map_data->map[(int)new_y][(int)map_data->player.x] == '0' &&
+			 map_data->map[(int)map_data->player.y][(int)new_x] == '0') ||
+			(ft_isalpha(map_data->map[(int)new_y][(int)map_data->player.x]) &&
+			 ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x])))
 		{
 			map_data->player.x = new_x;
 			map_data->player.y = new_y;
@@ -37,8 +39,10 @@ void calculate_strafe(t_map_data *map_data, int keysym, double move_speed)
 	{
 		new_x_d = map_data->player.x + map_data->player.plane_x * move_speed;
 		new_y_d = map_data->player.y + map_data->player.plane_y * move_speed;
-		if (map_data->map[(int)new_x_d][(int)map_data->player.y] == '0' &&
-			map_data->map[(int)map_data->player.x][(int)new_y_d] == '0')
+		if ((map_data->map[(int)new_y_d][(int)map_data->player.x] == '0' &&
+			 map_data->map[(int)map_data->player.y][(int)new_x_d] == '0') ||
+			(ft_isalpha(map_data->map[(int)new_y_d][(int)map_data->player.x]) &&
+			 ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x_d])))
 		{
 			map_data->player.x = new_x_d;
 			map_data->player.y = new_y_d;
@@ -78,30 +82,38 @@ void rotate_left(t_map_data *map_data, double rotate_speed)
 
 int handle_keypress(int keysym, t_map_data *map_data)
 {
-	double move_speed = 0.03 * 5.0;
-	double rotation_speed = 0.03 * 3.0;
+	double move_speed = 0.02 * 5.0;
+	double rotation_speed = 0.02 * 3.0;
 	if (keysym == XK_LEFT)
 		rotate_left(map_data, rotation_speed);
 	if (keysym == XK_RIGHT)
 		rotate_right(map_data, rotation_speed);
 	if (keysym == XK_W)
 	{
-		if (map_data->map[(int)(map_data->player.x + map_data->player.dir_x * move_speed)][(int)(map_data->player.y)] ==
-			'0')
+		if (map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed)][(int)(map_data->player.x)] ==
+					'0' ||
+			ft_isalpha(map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed)]
+									[(int)(map_data->player.x)]))
 			map_data->player.x += map_data->player.dir_x * move_speed;
-		if (map_data->map[(int)(map_data->player.x)][(int)(map_data->player.y + map_data->player.dir_y * move_speed)] ==
-			'0')
+		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x + map_data->player.dir_x * move_speed)] ==
+					'0' ||
+			ft_isalpha(map_data->map[(int)(map_data->player.y)]
+									[(int)(map_data->player.x + map_data->player.dir_x * move_speed)]))
 			map_data->player.y += map_data->player.dir_y * move_speed;
 	}
 	if (keysym == XK_A || keysym == XK_D)
 		calculate_strafe(map_data, keysym, move_speed);
 	if (keysym == XK_S)
 	{
-		if (map_data->map[(int)(map_data->player.x - map_data->player.dir_x * move_speed)][(int)(map_data->player.y)] ==
-			'0')
+		if (map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)][(int)(map_data->player.x)] ==
+					'0' ||
+			ft_isalpha(map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)]
+									[(int)(map_data->player.x)]))
 			map_data->player.x -= map_data->player.dir_x * move_speed;
-		if (map_data->map[(int)(map_data->player.x)][(int)(map_data->player.y - map_data->player.dir_y * move_speed)] ==
-			'0')
+		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x - map_data->player.dir_x * move_speed)] ==
+					'0' ||
+			ft_isalpha(map_data->map[(int)(map_data->player.y)]
+									[(int)(map_data->player.x - map_data->player.dir_x * move_speed)]))
 			map_data->player.y -= map_data->player.dir_y * move_speed;
 	}
 	return (0);

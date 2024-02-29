@@ -179,7 +179,7 @@ void verLine_img(t_img *img, int x, int y1, int y2, int color)
 		return;// Line is out of bounds
 	if (y1 < 0)
 		y1 = 0;
-	if (y2 >= WINDOW_WIDTH)
+	if (y2 >= WINDOW_HEIGHT)
 		y2 = WINDOW_HEIGHT - 1;
 	int y;
 
