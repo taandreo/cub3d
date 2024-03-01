@@ -180,7 +180,8 @@ int get_color(t_map_data *map_data, t_rays *rays)
 
 	if (rays->side == 0 && rays->ray_dir_x > 0)//south
 	{
-		int tex_offset = map_data->tex.line_len_south * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_south / 8);
+		int tex_offset = map_data->tex.line_len_south * map_data->tex.tex_y +
+				map_data->tex.tex_x * (map_data->tex.bpp_south / 8);
 		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_south + tex_offset);
 		if (map_data->tex.endian_south == 0)
 		{
@@ -195,7 +196,8 @@ int get_color(t_map_data *map_data, t_rays *rays)
 	}
 	else if (rays->side == 0 && rays->ray_dir_x < 0)//north
 	{
-		int tex_offset = map_data->tex.line_len_north * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_north / 8);
+		int tex_offset = map_data->tex.line_len_north * map_data->tex.tex_y +
+				map_data->tex.tex_x * (map_data->tex.bpp_north / 8);
 		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_north + tex_offset);
 		if (map_data->tex.endian_north == 0)
 		{
@@ -210,7 +212,8 @@ int get_color(t_map_data *map_data, t_rays *rays)
 	}
 	else if (rays->side == 1 && rays->ray_dir_y > 0)//east
 	{
-		int tex_offset = map_data->tex.line_len_east * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_east / 8);
+		int tex_offset =
+				map_data->tex.line_len_east * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_east / 8);
 		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_east + tex_offset);
 		if (map_data->tex.endian_east == 0)
 		{
@@ -262,7 +265,7 @@ void texture_loop(t_map_data *map_data, t_rays *rays, int x)
 		map_data->tex.tex_y = (int)map_data->tex.tex_pos & (map_data->tex.tex_height - 1);
 		map_data->tex.tex_pos += map_data->tex.step;
 		color = get_color(map_data, rays);
-		if (rays->side == 0)
+		if (rays->side == 1)
 			color = (color >> 1) & 8355711;
 		img_pixel_put(&map_data->img, x, y, color);
 		y++;
@@ -328,7 +331,7 @@ void img_pixel_put(t_img *img, int x, int y, int color)
 
 	i = img->bpp - 8;
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-//	*(unsigned int *)pixel = color;
+	//	*(unsigned int *)pixel = color;
 	while (i >= 0)
 	{
 		if (img->endian != 0)
