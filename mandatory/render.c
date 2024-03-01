@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/01 18:32:09 by ebezerra          #+#    #+#             */
+/*   Updated: 2024/03/01 18:32:14 by ebezerra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-#include <mlx.h>
-#include <stdio.h>
 
 void render_background(t_map_data *map_data);
 void render_vectors(t_map_data *map_data);
