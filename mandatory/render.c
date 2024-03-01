@@ -155,18 +155,18 @@ void render_vectors(t_map_data *map_data)
 		map_data->tex.wall_x -= floor(map_data->tex.wall_x);
 		set_texture_w_and_h(map_data, rays);
 		map_data->tex.tex_x = (int)(map_data->tex.wall_x * (double)map_data->tex.tex_width);
-		if (rays.side == 0 && rays.ray_dir_x > 0)
+		if (rays.side == 0 && rays.ray_dir_x < 0)
 			map_data->tex.tex_x = map_data->tex.tex_width - map_data->tex.tex_x - 1;
-		if (rays.side == 1 && rays.ray_dir_y < 0)
+		if (rays.side == 1 && rays.ray_dir_y > 0)
 			map_data->tex.tex_x = map_data->tex.tex_width - map_data->tex.tex_x - 1;
 		map_data->tex.step = 1.0 * map_data->tex.tex_height / rays.line_height;
 		map_data->tex.tex_pos = (rays.draw_end - WINDOW_HEIGHT / 2 + rays.line_height / 2) * map_data->tex.step;
 		texture_loop(map_data, &rays, x);
-		//verLine_img(&map_data->img, x, rays.draw_end, rays.draw_start, color);
+		//		verLine_img(&map_data->img, x, rays.draw_end, rays.draw_start, color);
 		//// Ceiling from top of the screen to the start of the wall
-		//verLine_img(&map_data->img, x, 0, rays.draw_end - 1, CEILING_COLOR);
+		verLine_img(&map_data->img, x, 0, rays.draw_end - 1, CEILING_COLOR);
 		//// Floor from the end of the wall to the bottom of the screen
-		//verLine_img(&map_data->img, x, rays.draw_start + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
+		verLine_img(&map_data->img, x, rays.draw_start + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
 		x++;
 	}
 }
@@ -175,18 +175,70 @@ int get_color(t_map_data *map_data, t_rays *rays)
 {
 	int color;
 
+
+	// Combine the color channels into one integer value
+
 	if (rays->side == 0 && rays->ray_dir_x > 0)//south
-		color = (*(map_data->tex.text_addr_south +
-				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	{
+		int tex_offset = map_data->tex.line_len_south * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_south / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_south + tex_offset);
+		if (map_data->tex.endian_south == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
 	else if (rays->side == 0 && rays->ray_dir_x < 0)//north
-		color = (*(map_data->tex.text_addr_north +
-				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	{
+		int tex_offset = map_data->tex.line_len_north * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_north / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_north + tex_offset);
+		if (map_data->tex.endian_north == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
 	else if (rays->side == 1 && rays->ray_dir_y > 0)//east
-		color = (*(map_data->tex.text_addr_east +
-				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	{
+		int tex_offset = map_data->tex.line_len_east * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_east / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_east + tex_offset);
+		if (map_data->tex.endian_east == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
 	else
-		color = (*(map_data->tex.text_addr_west +
-				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	{
+		int tex_offset =
+				map_data->tex.line_len_west * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_west / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_west + tex_offset);
+		if (map_data->tex.endian_west == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
 	return (color);
 }
 
@@ -207,12 +259,12 @@ void texture_loop(t_map_data *map_data, t_rays *rays, int x)
 	}
 	while (y <= y2)
 	{
-		map_data->tex.tex_y = (int)map_data->tex.tex_pos & (map_data->tex.tex_height);
+		map_data->tex.tex_y = (int)map_data->tex.tex_pos & (map_data->tex.tex_height - 1);
 		map_data->tex.tex_pos += map_data->tex.step;
 		color = get_color(map_data, rays);
-		if (rays->side == 1)
+		if (rays->side == 0)
 			color = (color >> 1) & 8355711;
-		map_data->img.addr[y * WINDOW_WIDTH + x] = color;
+		img_pixel_put(&map_data->img, x, y, color);
 		y++;
 	}
 }
@@ -276,6 +328,7 @@ void img_pixel_put(t_img *img, int x, int y, int color)
 
 	i = img->bpp - 8;
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+//	*(unsigned int *)pixel = color;
 	while (i >= 0)
 	{
 		if (img->endian != 0)
