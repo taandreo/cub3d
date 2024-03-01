@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/27 16:13:26 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/01 00:20:06 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,53 @@ typedef struct s_img
 	int endian;
 } t_img;
 
+
+typedef struct s_texture
+{
+	void *texture_north;
+	void *texture_south;
+	void *texture_east;
+	void *texture_west;
+	int tex_x;
+	int tex_y;
+	double wall_x;
+	double step;
+	double tex_pos;
+	int tex_width;
+	int tex_height;
+	int tex_width_north;
+	int tex_width_south;
+	int tex_width_east;
+	int tex_width_west;
+	int tex_height_north;
+	int tex_height_south;
+	int tex_height_east;
+	int tex_height_west;
+	char *text_addr_north;
+	char *text_addr_east;
+	char *text_addr_south;
+	char *text_addr_west;
+	int bpp_north;
+	int bpp_east;
+	int bpp_south;
+	int bpp_west;
+	int line_len_north;
+	int line_len_east;
+	int line_len_south;
+	int line_len_west;
+	int endian_north;
+	int endian_east;
+	int endian_south;
+	int endian_west;
+} t_texture;
+
 typedef struct s_map_data
 {
 	void *mlx_ptr;
 	void *win_ptr;
 	t_player player;
 	t_img img;
+	t_texture tex;
 	char **map;
 	int map_rows;
 	int max_columns;

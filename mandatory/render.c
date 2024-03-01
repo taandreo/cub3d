@@ -5,6 +5,8 @@
 void render_background(t_map_data *map_data);
 void render_vectors(t_map_data *map_data);
 void verLine_img(t_img *img, int x, int y1, int y2, int color);
+void set_texture_w_and_h(t_map_data *map_data, t_rays rays);
+void texture_loop(t_map_data *map_data, t_rays *rays, int x);
 
 int render(t_map_data *map_data)
 {
@@ -68,7 +70,6 @@ void render_vectors(t_map_data *map_data)
 {
 	t_rays rays;
 	int x;
-	int color;
 
 	x = 0;
 	while (x < WINDOW_WIDTH)
@@ -147,16 +148,96 @@ void render_vectors(t_map_data *map_data)
 		rays.draw_start = (rays.line_height / 2) + (WINDOW_HEIGHT / 2);
 		if (rays.draw_start >= WINDOW_HEIGHT)
 			rays.draw_start = WINDOW_HEIGHT - 1;
-		if (rays.side)
-			color = RED_PIXEL;
+		if (rays.side == 0)
+			map_data->tex.wall_x = map_data->player.y + rays.perp_wall_dist * rays.ray_dir_y;
 		else
-			color = 0x990000;
-		verLine_img(&map_data->img, x, rays.draw_end, rays.draw_start, color);
-		// Ceiling from top of the screen to the start of the wall
-		verLine_img(&map_data->img, x, 0, rays.draw_end - 1, CEILING_COLOR);
-		// Floor from the end of the wall to the bottom of the screen
-		verLine_img(&map_data->img, x, rays.draw_start + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
+			map_data->tex.wall_x = map_data->player.x + rays.perp_wall_dist * rays.ray_dir_x;
+		map_data->tex.wall_x -= floor(map_data->tex.wall_x);
+		set_texture_w_and_h(map_data, rays);
+		map_data->tex.tex_x = (int)(map_data->tex.wall_x * (double)map_data->tex.tex_width);
+		if (rays.side == 0 && rays.ray_dir_x > 0)
+			map_data->tex.tex_x = map_data->tex.tex_width - map_data->tex.tex_x - 1;
+		if (rays.side == 1 && rays.ray_dir_y < 0)
+			map_data->tex.tex_x = map_data->tex.tex_width - map_data->tex.tex_x - 1;
+		map_data->tex.step = 1.0 * map_data->tex.tex_height / rays.line_height;
+		map_data->tex.tex_pos = (rays.draw_end - WINDOW_HEIGHT / 2 + rays.line_height / 2) * map_data->tex.step;
+		texture_loop(map_data, &rays, x);
+		//verLine_img(&map_data->img, x, rays.draw_end, rays.draw_start, color);
+		//// Ceiling from top of the screen to the start of the wall
+		//verLine_img(&map_data->img, x, 0, rays.draw_end - 1, CEILING_COLOR);
+		//// Floor from the end of the wall to the bottom of the screen
+		//verLine_img(&map_data->img, x, rays.draw_start + 1, WINDOW_HEIGHT - 1, FLOOR_COLOR);
 		x++;
+	}
+}
+
+int get_color(t_map_data *map_data, t_rays *rays)
+{
+	int color;
+
+	if (rays->side == 0 && rays->ray_dir_x > 0)//south
+		color = (*(map_data->tex.text_addr_south +
+				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	else if (rays->side == 0 && rays->ray_dir_x < 0)//north
+		color = (*(map_data->tex.text_addr_north +
+				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	else if (rays->side == 1 && rays->ray_dir_y > 0)//east
+		color = (*(map_data->tex.text_addr_east +
+				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	else
+		color = (*(map_data->tex.text_addr_west +
+				   (map_data->tex.tex_height * map_data->tex.tex_y + map_data->tex.tex_x)));
+	return (color);
+}
+
+void texture_loop(t_map_data *map_data, t_rays *rays, int x)
+{
+	int y;
+	int color;
+	int y2;
+	int temp;
+
+	y = rays->draw_end;
+	y2 = rays->draw_start;
+	if (y > y2)
+	{
+		temp = y;
+		y = y2;
+		y2 = temp;
+	}
+	while (y <= y2)
+	{
+		map_data->tex.tex_y = (int)map_data->tex.tex_pos & (map_data->tex.tex_height);
+		map_data->tex.tex_pos += map_data->tex.step;
+		color = get_color(map_data, rays);
+		if (rays->side == 1)
+			color = (color >> 1) & 8355711;
+		map_data->img.addr[y * WINDOW_WIDTH + x] = color;
+		y++;
+	}
+}
+void set_texture_w_and_h(t_map_data *map_data, t_rays rays)
+{
+
+	if (rays.side == 0 && rays.ray_dir_x > 0)//south
+	{
+		map_data->tex.tex_width = map_data->tex.tex_width_south;
+		map_data->tex.tex_height = map_data->tex.tex_height_south;
+	}
+	else if (rays.side == 0 && rays.ray_dir_x < 0)//north
+	{
+		map_data->tex.tex_width = map_data->tex.tex_width_north;
+		map_data->tex.tex_height = map_data->tex.tex_height_north;
+	}
+	else if (rays.side == 1 && rays.ray_dir_y > 0)//east
+	{
+		map_data->tex.tex_width = map_data->tex.tex_width_east;
+		map_data->tex.tex_height = map_data->tex.tex_height_east;
+	}
+	else if (rays.side == 1 && rays.ray_dir_y < 0)//west
+	{
+		map_data->tex.tex_width = map_data->tex.tex_width_west;
+		map_data->tex.tex_height = map_data->tex.tex_height_west;
 	}
 }
 
