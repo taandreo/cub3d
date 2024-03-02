@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:32:09 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/01 18:32:14 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:14:50 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,40 +187,7 @@ int get_color(t_map_data *map_data, t_rays *rays)
 
 
 	// Combine the color channels into one integer value
-
 	if (rays->side == 0 && rays->ray_dir_x > 0)//south
-	{
-		int tex_offset = map_data->tex.line_len_south * map_data->tex.tex_y +
-				map_data->tex.tex_x * (map_data->tex.bpp_south / 8);
-		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_south + tex_offset);
-		if (map_data->tex.endian_south == 0)
-		{
-			// BGR format
-			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
-		}
-		else
-		{
-			// RGB format
-			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
-		}
-	}
-	else if (rays->side == 0 && rays->ray_dir_x < 0)//north
-	{
-		int tex_offset = map_data->tex.line_len_north * map_data->tex.tex_y +
-				map_data->tex.tex_x * (map_data->tex.bpp_north / 8);
-		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_north + tex_offset);
-		if (map_data->tex.endian_north == 0)
-		{
-			// BGR format
-			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
-		}
-		else
-		{
-			// RGB format
-			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
-		}
-	}
-	else if (rays->side == 1 && rays->ray_dir_y > 0)//east
 	{
 		int tex_offset =
 				map_data->tex.line_len_east * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_east / 8);
@@ -236,12 +203,44 @@ int get_color(t_map_data *map_data, t_rays *rays)
 			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
 		}
 	}
-	else
+	else if (rays->side == 0 && rays->ray_dir_x < 0)//north
 	{
 		int tex_offset =
 				map_data->tex.line_len_west * map_data->tex.tex_y + map_data->tex.tex_x * (map_data->tex.bpp_west / 8);
 		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_west + tex_offset);
 		if (map_data->tex.endian_west == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
+	else if (rays->side == 1 && rays->ray_dir_y > 0)//east
+	{
+		int tex_offset = map_data->tex.line_len_south * map_data->tex.tex_y +
+				map_data->tex.tex_x * (map_data->tex.bpp_south / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_south + tex_offset);
+		if (map_data->tex.endian_south == 0)
+		{
+			// BGR format
+			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
+		}
+		else
+		{
+			// RGB format
+			color = (pixel_ptr[0] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[2];
+		}
+	}
+	else//west
+	{
+		int tex_offset = map_data->tex.line_len_north * map_data->tex.tex_y +
+				map_data->tex.tex_x * (map_data->tex.bpp_north / 8);
+		unsigned char *pixel_ptr = (unsigned char *)(map_data->tex.text_addr_north + tex_offset);
+		if (map_data->tex.endian_north == 0)
 		{
 			// BGR format
 			color = (pixel_ptr[2] << 16) | (pixel_ptr[1] << 8) | pixel_ptr[0];
@@ -275,7 +274,7 @@ void texture_loop(t_map_data *map_data, t_rays *rays, int x)
 		map_data->tex.tex_y = (int)map_data->tex.tex_pos & (map_data->tex.tex_height - 1);
 		map_data->tex.tex_pos += map_data->tex.step;
 		color = get_color(map_data, rays);
-		if (rays->side == 1)
+		if (rays->side == 0)
 			color = (color >> 1) & 8355711;
 		img_pixel_put(&map_data->img, x, y, color);
 		y++;
