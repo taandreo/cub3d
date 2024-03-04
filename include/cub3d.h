@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/01 00:20:06 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:41:15 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ typedef struct s_texture
 	char *text_addr_east;
 	char *text_addr_south;
 	char *text_addr_west;
+	char *tex_file_north;
+	char *tex_file_south;
+	char *tex_file_east;
+	char *tex_file_west;
 	int bpp_north;
 	int bpp_east;
 	int bpp_south;

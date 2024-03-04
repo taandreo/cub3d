@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/02/26 13:45:11 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:00:56 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ void map_sample(t_map_data *map_data)
 	else
 		map_data->scale_factor = WINDOW_WIDTH / map_data->max_columns;
 	close(fd);
+	map_data->tex.tex_file_east = ft_strdup("./img/greystone.xpm");
+	map_data->tex.tex_file_west = ft_strdup("./img/mossy.xpm");
+	map_data->tex.tex_file_north = ft_strdup("./img/redbrick.xpm");
+	map_data->tex.tex_file_south = ft_strdup("./img/colorstone.xpm");
 }
 
 int main(void)
