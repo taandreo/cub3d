@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:31:38 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/04 19:44:17 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:45:30 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,54 +27,74 @@ int handle_keyrelease(int keysym, t_map_data *map_data)
 	return (0);
 }
 
+t_bool can_move_right(t_map_data *map_data, double move_speed)
+{
+	int next_y;
+	int next_x;
+
+	next_y = map_data->player.y + map_data->player.plane_y * move_speed;
+	next_x = map_data->player.x + map_data->player.plane_x * move_speed;
+
+	if (next_y >= 0 && next_y < map_data->map_rows && next_x >= 0 &&
+		next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
+	{
+		if ((map_data->map[next_y][(int)map_data->player.x] == '0' &&
+			 map_data->map[(int)map_data->player.y][next_x] == '0') ||
+			(ft_isalpha(map_data->map[next_y][(int)map_data->player.x]) &&
+			 ft_isalpha(map_data->map[(int)map_data->player.y][next_x])))
+			return true;
+		return false;
+	}
+	return false;
+}
+
+t_bool can_move_left(t_map_data *map_data, double move_speed)
+{
+	int next_y;
+	int next_x;
+
+	next_y = map_data->player.y - map_data->player.plane_y * move_speed;
+	next_x = map_data->player.x - map_data->player.plane_x * move_speed;
+
+	if (next_y >= 0 && next_y < map_data->map_rows && next_x >= 0 &&
+		next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
+	{
+		if ((map_data->map[next_y][(int)map_data->player.x] == '0' &&
+			 map_data->map[(int)map_data->player.y][next_x] == '0') ||
+			(ft_isalpha(map_data->map[next_y][(int)map_data->player.x]) &&
+			 ft_isalpha(map_data->map[(int)map_data->player.y][next_x])))
+			return true;
+		return false;
+	}
+	return false;
+}
+
 void calculate_strafe(t_map_data *map_data, int keysym, double move_speed)
 {
-	double new_x;
-	double new_y;
-	double new_x_d;
-	double new_y_d;
-
-
-	new_x = map_data->player.x - map_data->player.plane_x * move_speed;
-	new_y = map_data->player.y - map_data->player.plane_y * move_speed;
-	new_x_d = map_data->player.x + map_data->player.plane_x * move_speed;
-	new_y_d = map_data->player.y + map_data->player.plane_y * move_speed;
 	if (keysym == XK_A)
 	{
-		if ((map_data->map[(int)new_y][(int)map_data->player.x] == '0' &&
-			 map_data->map[(int)map_data->player.y][(int)new_x] == '0') ||
-			(ft_isalpha(map_data->map[(int)new_y][(int)map_data->player.x]) &&
-			 ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x])))
+		if (can_move_left(map_data, move_speed))
 		{
-			map_data->player.x = new_x;
-			map_data->player.y = new_y;
+			map_data->player.x -= map_data->player.plane_x * move_speed;
+			map_data->player.y -= map_data->player.plane_y * move_speed;
 		}
-		else if ((map_data->map[(int)new_y_d][(int)map_data->player.x] == '0' &&
-				  map_data->map[(int)map_data->player.y][(int)new_x_d] == '0') ||
-				 (ft_isalpha(map_data->map[(int)new_y_d][(int)map_data->player.x]) &&
-				  ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x_d])))
+		else if (can_move_right(map_data, move_speed))
 		{
-			map_data->player.x = new_x_d;
-			map_data->player.y = new_y_d;
+			map_data->player.x += map_data->player.plane_x * move_speed;
+			map_data->player.y += map_data->player.plane_y * move_speed;
 		}
 	}
 	if (keysym == XK_D)
 	{
-		if ((map_data->map[(int)new_y_d][(int)map_data->player.x] == '0' &&
-			 map_data->map[(int)map_data->player.y][(int)new_x_d] == '0') ||
-			(ft_isalpha(map_data->map[(int)new_y_d][(int)map_data->player.x]) &&
-			 ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x_d])))
+		if (can_move_right(map_data, move_speed))
 		{
-			map_data->player.x = new_x_d;
-			map_data->player.y = new_y_d;
+			map_data->player.x += map_data->player.plane_x * move_speed;
+			map_data->player.y += map_data->player.plane_y * move_speed;
 		}
-		else if ((map_data->map[(int)new_y][(int)map_data->player.x] == '0' &&
-				  map_data->map[(int)map_data->player.y][(int)new_x] == '0') ||
-				 (ft_isalpha(map_data->map[(int)new_y][(int)map_data->player.x]) &&
-				  ft_isalpha(map_data->map[(int)map_data->player.y][(int)new_x])))
+		else if (can_move_left(map_data, move_speed))
 		{
-			map_data->player.x = new_x;
-			map_data->player.y = new_y;
+			map_data->player.x -= map_data->player.plane_x * move_speed;
+			map_data->player.y -= map_data->player.plane_y * move_speed;
 		}
 	}
 }
@@ -109,6 +129,71 @@ void rotate_right(t_map_data *map_data, double rotate_speed)
 	map_data->player.plane_y = (old_plane_x * sin(rotate_speed)) + (map_data->player.plane_y * cos(rotate_speed));
 }
 
+
+t_bool can_move_y_forward(t_map_data *map_data, double move_speed)
+{
+	int next_y;
+
+	next_y = (int)(map_data->player.y + map_data->player.dir_y * move_speed);
+
+	if (next_y >= 0 && next_y < map_data->map_rows)
+	{
+		if (map_data->map[next_y][(int)(map_data->player.x)] == '0' ||
+			ft_isalpha(map_data->map[next_y][(int)(map_data->player.x)]))
+			return true;
+		return false;
+	}
+	return false;
+}
+
+t_bool can_move_y_backwards(t_map_data *map_data, double move_speed)
+{
+	int next_y;
+
+	next_y = (int)(map_data->player.y - map_data->player.dir_y * move_speed);
+
+	if (next_y >= 0 && next_y < map_data->map_rows)
+	{
+		if (map_data->map[next_y][(int)(map_data->player.x)] == '0' ||
+			ft_isalpha(map_data->map[next_y][(int)(map_data->player.x)]))
+			return true;
+		return false;
+	}
+	return false;
+}
+
+t_bool can_move_x_forward(t_map_data *map_data, double move_speed)
+{
+	int next_x;
+
+	next_x = (int)(map_data->player.x + map_data->player.dir_x * move_speed);
+
+	if (next_x >= 0 && next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
+	{
+		if (map_data->map[(int)map_data->player.y][next_x] == '0' ||
+			ft_isalpha(map_data->map[(int)map_data->player.y][next_x]))
+			return true;
+		return false;
+	}
+	return false;
+}
+
+t_bool can_move_x_backwards(t_map_data *map_data, double move_speed)
+{
+	int next_x;
+
+	next_x = (int)(map_data->player.x - map_data->player.dir_x * move_speed);
+
+	if (next_x >= 0 && next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
+	{
+		if (map_data->map[(int)map_data->player.y][next_x] == '0' ||
+			ft_isalpha(map_data->map[(int)map_data->player.y][next_x]))
+			return true;
+		return false;
+	}
+	return false;
+}
+
 int handle_keypress(int keysym, t_map_data *map_data)
 {
 	double move_speed = 0.03 * 5.0;
@@ -119,51 +204,27 @@ int handle_keypress(int keysym, t_map_data *map_data)
 		rotate_right(map_data, rotation_speed);
 	if (keysym == XK_W)
 	{
-		if (map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed)][(int)(map_data->player.x)] ==
-					'0' ||
-			ft_isalpha(map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed)]
-									[(int)(map_data->player.x)]))
+		if (can_move_y_forward(map_data, move_speed))
 			map_data->player.y += map_data->player.dir_y * move_speed;
-		else if (map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)]
-							  [(int)(map_data->player.x)] == '0' ||
-				 ft_isalpha(map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)]
-										 [(int)(map_data->player.x)]))
+		else if (can_move_y_backwards(map_data, move_speed))
 			map_data->player.y -= map_data->player.dir_y * move_speed;
-		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x + map_data->player.dir_x * move_speed)] ==
-					'0' ||
-			ft_isalpha(map_data->map[(int)(map_data->player.y)]
-									[(int)(map_data->player.x + map_data->player.dir_x * move_speed)]))
+		if (can_move_x_forward(map_data, move_speed))
 			map_data->player.x += map_data->player.dir_x * move_speed;
-		else if (map_data->map[(int)(map_data->player.y)]
-							  [(int)(map_data->player.x - map_data->player.dir_x * move_speed)] == '0' ||
-				 ft_isalpha(map_data->map[(int)(map_data->player.y)]
-										 [(int)(map_data->player.x - map_data->player.dir_x * move_speed)]))
+		else if (can_move_x_backwards(map_data, move_speed))
 			map_data->player.x -= map_data->player.dir_x * move_speed;
 	}
 	if (keysym == XK_A || keysym == XK_D)
 		calculate_strafe(map_data, keysym, move_speed);
 	if (keysym == XK_S)
 	{
-		if (map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)][(int)(map_data->player.x)] ==
-					'0' ||
-			ft_isalpha(map_data->map[(int)(map_data->player.y - map_data->player.dir_y * move_speed)]
-									[(int)(map_data->player.x)]))
-			map_data->player.y -= map_data->player.dir_y * move_speed * 3;
-		else if (map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed * 3)]
-							  [(int)(map_data->player.x)] == '0' ||
-				 ft_isalpha(map_data->map[(int)(map_data->player.y + map_data->player.dir_y * move_speed * 3)]
-										 [(int)(map_data->player.x)]))
-			map_data->player.y += map_data->player.dir_y * move_speed * 3;
-		if (map_data->map[(int)(map_data->player.y)][(int)(map_data->player.x - map_data->player.dir_x * move_speed)] ==
-					'0' ||
-			ft_isalpha(map_data->map[(int)(map_data->player.y)]
-									[(int)(map_data->player.x - map_data->player.dir_x * move_speed)]))
+		if (can_move_y_backwards(map_data, move_speed))
+			map_data->player.y -= map_data->player.dir_y * move_speed;
+		else if (can_move_y_forward(map_data, move_speed))
+			map_data->player.y += map_data->player.dir_y * move_speed;
+		if (can_move_x_backwards(map_data, move_speed))
 			map_data->player.x -= map_data->player.dir_x * move_speed;
-		else if (map_data->map[(int)(map_data->player.y)]
-							  [(int)(map_data->player.x + map_data->player.dir_x * move_speed * 3)] == '0' ||
-				 ft_isalpha(map_data->map[(int)(map_data->player.y)]
-										 [(int)(map_data->player.x + map_data->player.dir_x * move_speed * 3)]))
-			map_data->player.x += map_data->player.dir_x * move_speed * 3;
+		else if (can_move_x_forward(map_data, move_speed))
+			map_data->player.x += map_data->player.dir_x * move_speed;
 	}
 	return (0);
 }

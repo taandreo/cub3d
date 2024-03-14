@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:32:09 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/01 21:14:50 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:52:37 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,24 @@ void render_vectors(t_map_data *map_data)
 				rays.map_y += rays.step_y;
 				rays.side = 1;
 			}
-			if (map_data->map[rays.map_y][rays.map_x] == '1')
+			if (rays.map_y >= 0 && rays.map_y < map_data->map_rows && rays.map_x >= 0 &&
+				rays.map_x < (int)ft_strlen(map_data->map[rays.map_y]))
 			{
-				rays.hit = 1;
+				if (map_data->map[rays.map_y][rays.map_x] == '1')
+					rays.hit = 1;
+			}
+			else
+			{
+				if (rays.map_y < 0)
+					rays.map_y = 0;
+				else if (rays.map_y >= map_data->map_rows)
+					rays.map_y = map_data->map_rows - 1;
+				if (rays.map_x < 0)
+					rays.map_x = 0;
+				else if (rays.map_x >= (int)ft_strlen(map_data->map[rays.map_y]))
+					rays.map_x = (int)ft_strlen(map_data->map[rays.map_y]) - 1;
+				if (map_data->map[rays.map_y][rays.map_x] == '1')
+					rays.hit = 1;
 			}
 		}
 		// Distance projected on camera direction
