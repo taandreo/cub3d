@@ -6,12 +6,11 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/15 01:50:36 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:41:39 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <fcntl.h>
 
 void map_sample(t_map_data *map_data)
 {
@@ -31,6 +30,7 @@ void map_sample(t_map_data *map_data)
 		max_column = ft_strlen(ft_strtrim(gnl, "\n"));
 		if (max_column > map_data->max_columns)
 			map_data->max_columns = max_column;
+		free(gnl);
 		gnl = get_next_line(fd);
 	}
 	close(fd);
@@ -43,6 +43,7 @@ void map_sample(t_map_data *map_data)
 	{
 		map_data->map[i] = ft_strdup(ft_strtrim(gnl, "\n"));
 		i++;
+		free(gnl);
 		gnl = get_next_line(fd);
 	}
 	map_data->map_rows = map_rows;

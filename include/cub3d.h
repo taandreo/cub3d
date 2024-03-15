@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/15 02:10:55 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:52:40 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,6 @@ void rotate_right(t_map_data *map_data, double rotate_speed);
 void calculate_strafe(t_map_data *map_data, double move_speed);
 void calculate_forward_and_backward_movement(t_map_data *map_data, double move_speed);
 void kill_mlx(t_map_data *map_data);
+void init_textures(t_map_data *map_data);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 00:36:51 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/15 02:00:44 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 03:37:42 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int keysym_to_index(int keysym)
+int	keysym_to_index(int keysym)
 {
 	if (keysym == XK_W)
 		return (KEY_W);
@@ -29,9 +29,9 @@ int keysym_to_index(int keysym)
 	return (-1);
 }
 
-int handle_keypress(int keysym, t_map_data *map_data)
+int	handle_keypress(int keysym, t_map_data *map_data)
 {
-	int index;
+	int	index;
 
 	index = keysym_to_index(keysym);
 	if (index >= 0)
@@ -39,9 +39,9 @@ int handle_keypress(int keysym, t_map_data *map_data)
 	return (0);
 }
 
-int handle_keyrelease(int keysym, t_map_data *map_data)
+int	handle_keyrelease(int keysym, t_map_data *map_data)
 {
-	int index;
+	int	index;
 
 	index = keysym_to_index(keysym);
 	if (keysym == XK_ESCAPE)
