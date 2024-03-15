@@ -23,7 +23,12 @@ LIB_DIRS := $(LIBFT_DIR)
 
 SRCS = $(addprefix $(MANDATORY_DIR)/, cub3d.c\
 					mlx.c\
-					render.c)
+					render.c\
+					movement.c\
+					key_events.c\
+					rotate_view.c\
+					calculate_strafe.c\
+					move_forward_backward.c)
 
 # BONUS = $(addprefix $(BONUS_DIR)/, minishell_bonus.c\
 			

@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/04 19:41:15 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:10:55 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@
 #define MY_DBL_EPSILON 1e-9
 #define PI270 (3 * PI) / 2
 #define PI90 PI / 2
+
+typedef enum e_keys_index
+{
+	KEY_W,
+	KEY_A,
+	KEY_S,
+	KEY_D,
+	KEY_RIGHT,
+	KEY_LEFT,
+	MAX_KEYS
+} t_keys_index;
 
 typedef struct t_player
 {
@@ -132,6 +143,7 @@ typedef struct s_map_data
 	t_texture tex;
 	char **map;
 	int map_rows;
+	t_bool keysym_states[MAX_KEYS];
 	int max_columns;
 	double scale_factor;
 } t_map_data;
@@ -175,13 +187,20 @@ typedef struct s_rays
 
 void initialize_mlx(t_map_data *map_data);
 int handle_mouse(t_map_data *map_data);
-int handle_keyrelease(int keysym, t_map_data *map_data);
 int render(t_map_data *map_data);
 void init_player(t_map_data *map_data);
 int handle_keypress(int keysym, t_map_data *map_data);
+int handle_keyrelease(int keysym, t_map_data *map_data);
+void handle_movement(t_map_data *map_data);
+int keysym_to_index(int keysym);
 float ft_abs(float value);
 void draw_line(t_map_data *map_data, double x_end, double y_end, int color);
 void img_pixel_put(t_img *img, int x, int y, int color);
 int is_parallel_to_x_axis(double angle);
+void rotate_left(t_map_data *map_data, double rotate_speed);
+void rotate_right(t_map_data *map_data, double rotate_speed);
+void calculate_strafe(t_map_data *map_data, double move_speed);
+void calculate_forward_and_backward_movement(t_map_data *map_data, double move_speed);
+void kill_mlx(t_map_data *map_data);
 
 #endif

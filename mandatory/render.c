@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:32:09 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/14 18:52:37 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:14:13 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void texture_loop(t_map_data *map_data, t_rays *rays, int x);
 
 int render(t_map_data *map_data)
 {
+	// Render movements direct on the game loop so we can have Keys Rollover.
+	handle_movement(map_data);
 	render_vectors(map_data);
 	mlx_put_image_to_window(map_data->mlx_ptr, map_data->win_ptr, map_data->img.mlx_img, 0, 0);
 	return 0;

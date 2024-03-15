@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/04 20:00:56 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:50:36 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int main(void)
 	{
 		ft_printf("%s\n", map_data.map[i]);
 	}
+	ft_memset(map_data.keysym_states, 0, sizeof(map_data.keysym_states));
 	init_player(&map_data);
 	initialize_mlx(&map_data);
 	mlx_loop_hook(map_data.mlx_ptr, &render, &map_data);
