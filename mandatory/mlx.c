@@ -6,33 +6,15 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:31:38 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/15 03:23:48 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/16 20:13:13 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	mlx_exit(t_map_data *map_data)
-{
-	int	y;
-
-	y = 0;
-	while (map_data->map[y])
-	{
-		free(map_data->map[y]);
-		y++;
-	}
-	free(map_data->map);
-	free(map_data->tex.tex_file_north);
-	free(map_data->tex.tex_file_south);
-	free(map_data->tex.tex_file_east);
-	free(map_data->tex.tex_file_west);
-	map_data->map = NULL;
-}
-
 void	kill_mlx(t_map_data *map_data)
 {
-	mlx_exit(map_data);
+	free_map_data(map_data);
 	if (map_data->img.mlx_img)
 		mlx_destroy_image(map_data->mlx_ptr, map_data->img.mlx_img);
 	if (map_data->win_ptr)

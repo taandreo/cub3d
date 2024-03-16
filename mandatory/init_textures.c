@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 02:50:06 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/15 03:27:10 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/16 20:07:04 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	init_south_west(t_map_data *map_data)
 	map_data->tex.texture_south = mlx_xpm_file_to_image(map_data->mlx_ptr,
 			map_data->tex.tex_file_south, &map_data->tex.tex_width_south,
 			&map_data->tex.tex_height_south);
+	if (!map_data->tex.texture_south)
+		error_and_exit("Texture file error");
 	map_data->tex.text_addr_south = mlx_get_data_addr(
 			map_data->tex.texture_south, &map_data->tex.bpp_south,
 			&map_data->tex.line_len_south, &map_data->tex.endian_south);

@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/15 09:37:45 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/16 20:13:07 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,9 @@ void	set_texture_width_and_height(t_map_data *map_data, t_rays rays);
 int		get_color(t_map_data *map_data, t_rays *rays);
 void	vert_line_img(t_map_data *map_data, int y1, int y2, int color);
 void	img_pixel_put(t_img *img, int x, int y, int color);
+void	free_map_data(t_map_data *map_data);
+void	free_and_error(char *msg);
+int		open_file(char *filename);
+
 
 #endif
