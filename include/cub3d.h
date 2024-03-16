@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/04 19:41:15 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:46:25 by tairribe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@
 #define MY_DBL_EPSILON 1e-9
 #define PI270 (3 * PI) / 2
 #define PI90 PI / 2
+// MAP
+#define STDERR_FILENO 2
 
 typedef struct t_player
 {
@@ -86,6 +88,8 @@ typedef struct s_texture
 	void *texture_south;
 	void *texture_east;
 	void *texture_west;
+	int ceiling_color;
+	int floor_color;
 	int tex_x;
 	int tex_y;
 	double wall_x;

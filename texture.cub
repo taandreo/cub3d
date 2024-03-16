@@ -1,0 +1,8 @@
+F 255,255,125
+
+NO ./file00asdf
+SO ./file03asdf
+WE ./file05asdf
+EA ./file05asdf
+
+C 24,24,25
