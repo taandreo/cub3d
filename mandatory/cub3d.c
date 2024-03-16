@@ -6,25 +6,11 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/16 20:33:40 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/16 20:58:40 by tairribe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <fcntl.h>
-
-int	open_file(char *filename)
-{
-	int fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "Error reading file %s", filename);
-		exit(1);
-	}
-	return(fd);
-}
 
 t_bool	is_texture(char *texture)
 {
@@ -148,17 +134,17 @@ void	read_map_file(char *filename, t_map_data *map_data)
 		line = get_next_line(fd);
 	}
 	// read_map(line)
-	// ft_printf("NO: %s\n", map_data->tex.tex_file_north);
-	// ft_printf("SO: %s\n", map_data->tex.tex_file_south);
-	// ft_printf("WE: %s\n", map_data->tex.tex_file_west);
-	// ft_printf("EA: %s\n", map_data->tex.tex_file_east);
-	// ft_printf("C: %d\n", map_data->tex.ceiling_color);
-	// ft_printf("F: %d\n", map_data->tex.floor_color);
-	// if (!check_texture(map_data))
-	// {
-	// 	ft_dprintf(STDERR_FILENO, "Error\nReading file\n");
-	// 	exit(1);
-	// }
+	ft_printf("NO: %s\n", map_data->tex.tex_file_north);
+	ft_printf("SO: %s\n", map_data->tex.tex_file_south);
+	ft_printf("WE: %s\n", map_data->tex.tex_file_west);
+	ft_printf("EA: %s\n", map_data->tex.tex_file_east);
+	ft_printf("C: %d\n", map_data->tex.ceiling_color);
+	ft_printf("F: %d\n", map_data->tex.floor_color);
+	if (!check_texture(map_data))
+	{
+		ft_dprintf(STDERR_FILENO, "Error\nReading file\n");
+		exit(1);
+	}
 
 }
 
@@ -218,7 +204,7 @@ void	init_map_data(t_map_data *map_data)
 
 int main(int argc, char *argv[])
 {
-	t_map_data map_data;
+	t_map_data	map_data;
 
 	if (argc != 2)
 	{
