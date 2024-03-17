@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/16 20:55:46 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:03:55 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@
 # define DESTROY_NOTIFY 17
 # define STRUCTURE_NOTIFY_MASK 131072
 // Player Color
-# define RED_PIXEL 0xFF0000
-# define GREEN_PIXEL 0x00FF00
-# define BLACK_PIXEL 0x000000
-# define WHITE_PIXEL 0xFFFFFF
-# define GRAY_PIXEL 0x777777
 # define CEILING_COLOR 0xC6FCFF
 # define FLOOR_COLOR 0x5C7554
 # define STDERR_FILENO 2
