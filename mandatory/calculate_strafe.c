@@ -23,7 +23,7 @@ t_bool	can_move_right(t_map_data *map_data, double move_speed)
 		&& next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
 	{
 		if ((map_data->map[next_y][(int)map_data->player.x] == '0'
-			 || ft_isalpha(map_data->map[next_y][(int)map_data->player.x]))
+			|| ft_isalpha(map_data->map[next_y][(int)map_data->player.x]))
 			&& (map_data->map[(int)map_data->player.y][next_x] == '0'
 				|| ft_isalpha(map_data->map[(int)map_data->player.y][next_x])))
 			return (true);
@@ -43,9 +43,9 @@ t_bool	can_move_left(t_map_data *map_data, double move_speed)
 		&& next_x < (int)ft_strlen(map_data->map[(int)map_data->player.y]))
 	{
 		if ((map_data->map[next_y][(int)map_data->player.x] == '0'
-			 || ft_isalpha(map_data->map[next_y][(int)map_data->player.x]))
+			|| ft_isalpha(map_data->map[next_y][(int)map_data->player.x]))
 			&& (map_data->map[(int)map_data->player.y][next_x] == '0'
-			 || ft_isalpha(map_data->map[(int)map_data->player.y][next_x])))
+				|| ft_isalpha(map_data->map[(int)map_data->player.y][next_x])))
 			return (true);
 		return (false);
 	}

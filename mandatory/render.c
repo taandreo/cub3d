@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:32:09 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/17 23:29:57 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:34:38 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	render_vectors(t_map_data *map_data)
 		calculate_texture_x(map_data, &rays);
 		calculate_texture_y(map_data, &rays, x);
 		map_data->x = x;
-		vert_line_img(map_data, 0, rays.draw_end - 1, map_data->tex.ceiling_color);
+		vert_line_img(map_data, 0, rays.draw_end - 1,
+			map_data->tex.ceiling_color);
 		vert_line_img(map_data, rays.draw_start + 1, WINDOW_HEIGHT - 1,
 			map_data->tex.floor_color);
 		x++;

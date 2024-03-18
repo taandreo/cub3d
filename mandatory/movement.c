@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 02:04:34 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/15 07:58:22 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/18 10:45:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	handle_movement(t_map_data *map_data)
 	double	move_speed;
 	double	rotation_speed;
 
-	move_speed = 0.03 * 5.0;
-	rotation_speed = 0.03 * 3.0;
+	move_speed = 0.035 * 5.0;
+	rotation_speed = 0.035 * 3.0;
 	if (map_data->keysym_states[KEY_LEFT])
 		rotate_left(map_data, rotation_speed);
 	if (map_data->keysym_states[KEY_RIGHT])

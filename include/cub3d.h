@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/17 22:50:34 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:31:02 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,16 @@ void	free_map_data(t_map_data *map_data);
 void	free_and_error(t_map_data *map_data, char *msg);
 int		open_file(char *filename);
 void	read_map_file(char *filename, t_map_data *map_data);
+void	print_map(t_map_data *map_data);
+void	init_map_data(t_map_data *map_data);
+char	*read_texture(t_map_data *map_data, int fd);
+t_list	*read_map_list(char *line, int fd);
+void	list_to_array(t_map_data *map_data, t_list *map_list);
+t_bool	is_texture(char *texture);
+t_bool	is_texture_set(char *line, t_map_data *map_data);
+t_bool	is_empty(char *line);
+void	set_texture(char *line, t_map_data *map_data);
+t_bool	check_texture(t_map_data *map_data);
+int		to_rgb(char *line);
 
 #endif
-

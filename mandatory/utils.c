@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:10:51 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/17 20:15:08 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:36:05 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	open_file(char *filename)
 {
-    int	fd;
+	int	fd;
 
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-    {
-        ft_dprintf(STDERR_FILENO, "Error reading file %s", filename);
-        exit(1);
-    }
-    return (fd);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_dprintf(STDERR_FILENO, "Error reading file %s", filename);
+		exit(1);
+	}
+	return (fd);
 }
 
-void   error_and_exit(char *msg)
+void	error_and_exit(char *msg)
 {
 	ft_dprintf(STDERR_FILENO, "Error\n%s\n", msg);
 	exit(1);
@@ -50,4 +50,3 @@ void	free_map_data(t_map_data *map_data)
 	if (map_data->tex.tex_file_west)
 		free(map_data->tex.tex_file_west);
 }
-
