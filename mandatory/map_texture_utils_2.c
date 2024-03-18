@@ -46,12 +46,12 @@ t_bool	trim_rgb_spaces(char **rgb)
 	{
 		value = ft_strtrim(rgb[i], " ");
 		if (!value)
-			return (true);
+			return (false);
 		free(rgb[i]);
 		rgb[i] = value;
 		i++;
 	}
-	return (false);
+	return (true);
 }
 
 int	to_rgb(char *line)
