@@ -1,7 +1,7 @@
 .PHONY: all clean fclean re log bonus libft builtin_test
 
 CC = clang
-NAME = cub3d
+NAME = cub3D
 # NAME_BONUS = .minishell_bonus.txt
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
