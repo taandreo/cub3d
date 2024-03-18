@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 02:50:06 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/17 12:21:29 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:39:57 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_north_east(t_map_data *map_data)
 {
+	ft_printf("%s", map_data->tex.tex_file_north);
 	map_data->tex.texture_north = mlx_xpm_file_to_image(map_data->mlx_ptr,
 			map_data->tex.tex_file_north, &map_data->tex.tex_width_north,
 			&map_data->tex.tex_height_north);

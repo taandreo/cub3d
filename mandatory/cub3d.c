@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/17 23:35:48 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:53:11 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	set_texture(char *line, t_map_data *map_data)
 	int	rgb;
 
 	if (ft_startswith(line, "SO "))
-		map_data->tex.tex_file_south = ft_strtrim(line + 3, " ");
+		map_data->tex.tex_file_south = ft_strtrim(line + 3, " \n");
 	else if (ft_startswith(line, "NO "))
-		map_data->tex.tex_file_north = ft_strtrim(line + 3, " ");
+		map_data->tex.tex_file_north = ft_strtrim(line + 3, " \n");
 	else if (ft_startswith(line, "WE "))
-		map_data->tex.tex_file_west = ft_strtrim(line + 3, " ");
+		map_data->tex.tex_file_west = ft_strtrim(line + 3, " \n");
 	else if (ft_startswith(line, "EA "))
-		map_data->tex.tex_file_east = ft_strtrim(line + 3, " ");
+		map_data->tex.tex_file_east = ft_strtrim(line + 3, " \n");
 	else if (ft_startswith(line, "C ") || ft_startswith(line, "F "))
 	{
 		rgb = to_rgb(line + 2);
