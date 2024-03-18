@@ -40,11 +40,11 @@ t_list	*read_map_list(char *line, int fd)
 		while (line[i] && ft_strchr("01NSEW ", line[i]))
 			i++;
 		if (!ft_strchr("\n\0", line[i]))
-			clear_list_return_null(&map_list);
+			return (clear_list_return_null(&map_list));
 		if (line[i] == '\n' && i != 0)
 			line[i] = '\0';
 		if (line[i] == '\n')
-			clear_list_return_null(&map_list);
+			return (clear_list_return_null(&map_list));
 		ft_lstadd_back(&map_list, ft_lstnew(line));
 		line = free_then_gnl(line, fd);
 	}
