@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/16 21:03:55 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/17 22:50:34 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@
 # define DESTROY_NOTIFY 17
 # define STRUCTURE_NOTIFY_MASK 131072
 // Player Color
-# define CEILING_COLOR 0xC6FCFF
-# define FLOOR_COLOR 0x5C7554
 # define STDERR_FILENO 2
 
 typedef enum e_keys_index
@@ -82,58 +80,62 @@ typedef struct s_img
 
 typedef struct s_texture
 {
-	void *texture_north;
-	void *texture_south;
-	void *texture_east;
-	void *texture_west;
-	int ceiling_color;
-	int floor_color;
-	int tex_x;
-	int tex_y;
-	double wall_x;
-	double step;
-	double tex_pos;
-	int tex_width;
-	int tex_height;
-	int tex_width_north;
-	int tex_width_south;
-	int tex_width_east;
-	int tex_width_west;
-	int tex_height_north;
-	int tex_height_south;
-	int tex_height_east;
-	int tex_height_west;
-	char *text_addr_north;
-	char *text_addr_east;
-	char *text_addr_south;
-	char *text_addr_west;
-	char *tex_file_north;
-	char *tex_file_south;
-	char *tex_file_east;
-	char *tex_file_west;
-	int bpp_north;
-	int bpp_east;
-	int bpp_south;
-	int bpp_west;
-	int line_len_north;
-	int line_len_east;
-	int line_len_south;
-	int line_len_west;
-	int endian_north;
-	int endian_east;
-	int endian_south;
-	int endian_west;
-} t_texture;
+	void	*texture_north;
+	void	*texture_south;
+	void	*texture_east;
+	void	*texture_west;
+	int		ceiling_color;
+	int		floor_color;
+	int		tex_x;
+	int		tex_y;
+	double	wall_x;
+	double	step;
+	double	tex_pos;
+	int		tex_width;
+	int		tex_height;
+	int		tex_width_north;
+	int		tex_width_south;
+	int		tex_width_east;
+	int		tex_width_west;
+	int		tex_height_north;
+	int		tex_height_south;
+	int		tex_height_east;
+	int		tex_height_west;
+	char	*text_addr_north;
+	char	*text_addr_east;
+	char	*text_addr_south;
+	char	*text_addr_west;
+	char	*tex_file_north;
+	char	*tex_file_south;
+	char	*tex_file_east;
+	char	*tex_file_west;
+	int		bpp_north;
+	int		bpp_east;
+	int		bpp_south;
+	int		bpp_west;
+	int		line_len_north;
+	int		line_len_east;
+	int		line_len_south;
+	int		line_len_west;
+	int		endian_north;
+	int		endian_east;
+	int		endian_south;
+	int		endian_west;
+}	t_texture;
 
 typedef struct s_map_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			start_x;
+	int			start_y;
+	char		start;
 	t_player	player;
 	t_img		img;
 	t_texture	tex;
 	char		**map;
 	int			map_rows;
+	int			*line_size;
 	t_bool		keysym_states[MAX_KEYS];
 	int			x;
 }	t_map_data;
@@ -193,6 +195,7 @@ void	img_pixel_put(t_img *img, int x, int y, int color);
 void	free_map_data(t_map_data *map_data);
 void	free_and_error(t_map_data *map_data, char *msg);
 int		open_file(char *filename);
-
+void	read_map_file(char *filename, t_map_data *map_data);
 
 #endif
+
