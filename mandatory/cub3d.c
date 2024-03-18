@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 22:54:16 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/17 22:25:52 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/17 23:35:48 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,42 +328,6 @@ void	read_map_file(char *filename, t_map_data *map_data)
 	// print_map(map_data);
 }
 
-// void	map_sample(char *filename, t_map_data *map_data)
-// {
-// 	int fd;
-// 	char *gnl;
-// 	int map_rows;
-// 	int i;
-
-// 	fd = open_file(filename);
-// 	map_data->max_columns = 0;
-// 	gnl = get_next_line(fd);
-// 	map_rows = 0;
-// 	while (gnl)
-// 	{
-// 		map_rows++;
-// 		gnl = get_next_line(fd);
-// 	}
-// 	close(fd);
-// 	map_data->map = malloc((map_rows + 1) * sizeof(char *));
-// 	map_data->map[map_rows] = NULL;
-// 	fd = open("test.cub", O_RDONLY);
-// 	gnl = get_next_line(fd);
-// 	i = 0;
-// 	while (gnl)
-// 	{
-// 		map_data->map[i] = ft_strdup(ft_strtrim(gnl, "\n"));
-// 		i++;
-// 		gnl = get_next_line(fd);
-// 	}
-// 	map_data->map_rows = map_rows;
-// 	close(fd);
-// 	map_data->tex.tex_file_east = ft_strdup("./img/greystone.xpm");
-// 	map_data->tex.tex_file_west = ft_strdup("./img/mossy.xpm");
-// 	map_data->tex.tex_file_north = ft_strdup("./img/redbrick.xpm");
-// 	map_data->tex.tex_file_south = ft_strdup("./img/colorstone.xpm");
-// }
-
 void	init_map_data(t_map_data *map_data)
 {
 	map_data->tex.ceiling_color = -1;
@@ -389,16 +353,12 @@ int main(int argc, char *argv[])
 	}
 	init_map_data(&map_data);
 	read_map_file(argv[1], &map_data);
-	// for (int i = 0; i < map_data.map_rows; i++)
-	// {
-	// 	ft_printf("%s\n", map_data.map[i]);
-	// }
-	// init_player(&map_data);
-	// initialize_mlx(&map_data);
-	// mlx_loop_hook(map_data.mlx_ptr, &render, &map_data);
-	// mlx_hook(map_data.win_ptr, KEY_RELEASE, KEY_RELEASE_MASK, &handle_keyrelease, &map_data);
-	// mlx_hook(map_data.win_ptr, KEY_PRESS, KEY_PRESS_MASK, &handle_keypress, &map_data);
-	// mlx_hook(map_data.win_ptr, DESTROY_NOTIFY, STRUCTURE_NOTIFY_MASK, &handle_mouse, &map_data);
-	// mlx_loop(map_data.mlx_ptr);
+	init_player(&map_data);
+	initialize_mlx(&map_data);
+	mlx_loop_hook(map_data.mlx_ptr, &render, &map_data);
+	mlx_hook(map_data.win_ptr, KEY_RELEASE, KEY_RELEASE_MASK, &handle_keyrelease, &map_data);
+	mlx_hook(map_data.win_ptr, KEY_PRESS, KEY_PRESS_MASK, &handle_keypress, &map_data);
+	mlx_hook(map_data.win_ptr, DESTROY_NOTIFY, STRUCTURE_NOTIFY_MASK, &handle_mouse, &map_data);
+	mlx_loop(map_data.mlx_ptr);
 	return (0);
 }
