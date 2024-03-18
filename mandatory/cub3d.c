@@ -154,7 +154,6 @@ void	read_map_file(char *filename, t_map_data *map_data)
 // 	char *gnl;
 // 	int map_rows;
 // 	int i;
-// 	int max_column;
 
 // 	fd = open_file(filename);
 // 	map_data->max_columns = 0;
@@ -163,9 +162,6 @@ void	read_map_file(char *filename, t_map_data *map_data)
 // 	while (gnl)
 // 	{
 // 		map_rows++;
-// 		max_column = ft_strlen(ft_strtrim(gnl, "\n"));
-// 		if (max_column > map_data->max_columns)
-// 			map_data->max_columns = max_column;
 // 		gnl = get_next_line(fd);
 // 	}
 // 	close(fd);
@@ -181,10 +177,6 @@ void	read_map_file(char *filename, t_map_data *map_data)
 // 		gnl = get_next_line(fd);
 // 	}
 // 	map_data->map_rows = map_rows;
-// 	if (map_data->map_rows >= map_data->max_columns)
-// 		map_data->scale_factor = WINDOW_HEIGHT / map_data->map_rows;
-// 	else
-// 		map_data->scale_factor = WINDOW_WIDTH / map_data->max_columns;
 // 	close(fd);
 // 	map_data->tex.tex_file_east = ft_strdup("./img/greystone.xpm");
 // 	map_data->tex.tex_file_west = ft_strdup("./img/mossy.xpm");
