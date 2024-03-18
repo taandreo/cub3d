@@ -46,7 +46,7 @@ t_list	*read_map_list(char *line, int fd)
 		if (line[i] == '\n')
 			return (clear_list_return_null(&map_list));
 		ft_lstadd_back(&map_list, ft_lstnew(line));
-		line = free_then_gnl(line, fd);
+		line = get_next_line(fd);
 	}
 	return (map_list);
 }
