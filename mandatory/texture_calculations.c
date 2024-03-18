@@ -47,7 +47,7 @@ void	calculate_texture_y(t_map_data *map_data, t_rays *rays, int x)
 		map_data->tex.tex_pos += map_data->tex.step;
 		color = get_color(map_data, rays);
 		if (rays->side == 0)
-			color = (color >> 1) & 8355711;
+			color = (color >> 1) & 0x7F7F7F;
 		img_pixel_put(&map_data->img, x, y, color);
 		y++;
 	}

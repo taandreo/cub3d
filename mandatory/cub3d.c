@@ -29,8 +29,26 @@ t_bool	is_texture(char *texture)
 	return (false);
 }
 
-int rgb_to_int(int r, int g, int b) {
+int rgb_to_int(int r, int g, int b)
+{
     return (r << 16) | (g << 8) | b;
+}
+
+void	trim_rgb_spaces(char **rgb)
+{
+	char	*value;
+	int i;
+	int size;
+
+	i = 0;
+	size = ft_lenmt((void *)rgb);
+	while (i < size)
+	{
+		value = ft_strtrim(rgb[i], " ");
+		free(rgb[i]);
+		rgb[i] = value;
+		i++;
+	}
 }
 
 int to_rgb(char *line)
@@ -49,6 +67,7 @@ int to_rgb(char *line)
 		ft_freemt((void **) rgb);
 		return (-1);
 	}
+	trim_rgb_spaces(rgb);
 	if (!ft_is_number(rgb[0]) || ft_atoi(rgb[0]) < 0 || ft_atoi(rgb[0]) > 255)
 		is_rgb = false;
 	if (!ft_is_number(rgb[1]) || ft_atoi(rgb[1]) < 0 || ft_atoi(rgb[1]) > 255)
@@ -104,10 +123,7 @@ void	set_texture(char *line, t_map_data *map_data)
 	{
 		rgb = to_rgb(line + 2);
 		if (rgb == -1)
-		{
-			ft_dprintf(STDERR_FILENO, "Error\nReading file\n");
-			exit(1);
-		}
+			free_and_error(map_data, "Colors misconfiguration");
 		if (ft_startswith(line, "F "))
 			map_data->tex.floor_color = rgb;
 		else
@@ -150,11 +166,10 @@ void	list_to_array(t_map_data *map_data, t_list *map_list)
 	while(map_list)
 	{
 		map_data->map[i] = map_list->content;
-		map_data->line_size[i] = ft_strlen(map_list->content);
+		map_data->line_size[i] = (int)ft_strlen(map_list->content);
 		map_list = map_list->next;
 		i++;
 	}
-	map_data->map[i] = NULL;
 	free_list(map_list);
 }
 
@@ -175,7 +190,6 @@ t_list	*read_map_list(char *line, int fd)
 	size_t	i;
 	t_list	*map_list;
 
-	i = 0;
 	map_list = NULL;
 	if (line == NULL)
 		return (NULL);
@@ -186,16 +200,21 @@ t_list	*read_map_list(char *line, int fd)
 	}
 	while(line)
 	{
-		while (ft_strchr("01NSEW ", line[i]))
+		i = 0;
+		while (line[i] && ft_strchr("01NSEW ", line[i]))
 			i++;
-		if (!ft_strchr("\n\0", line[i]) && line[i] != 33)
+		if (!ft_strchr("\n\0", line[i]))
 		{
 			ft_lstclear(&map_list, free);
-			return(NULL);
+			return (NULL);
 		}
-		if (line[i] == '\n')
+		if (line[i] == '\n' && i != 0)
 			line[i] = '\0';
-		i = 0;
+		if (line[i] == '\n')
+		{
+			ft_lstclear(&map_list, free);
+			return (NULL);
+		}
 		ft_lstadd_back(&map_list, ft_lstnew(line));
 		line = get_next_line(fd);
 	}
@@ -212,7 +231,10 @@ char	*read_texture(t_map_data *map_data, int fd)
 		if (is_texture(line))
 		{
 			if (is_texture_set(line, map_data))
+			{
+				free(line);
 				free_and_error(map_data, "Texture already set");
+			}
 			set_texture(line, map_data);
 		}
 		else if (!is_empty(line))
@@ -224,7 +246,7 @@ char	*read_texture(t_map_data *map_data, int fd)
 		line = get_next_line(fd);
 	}
 	if (!check_texture(map_data))
-		free_and_error(map_data, "Reading file");
+		free_and_error(map_data, "Texture or colors misconfiguration");
 	return (line);
 }
 
@@ -314,18 +336,10 @@ void	read_map_file(char *filename, t_map_data *map_data)
 	line = read_texture(map_data, fd);
 	map_list = read_map_list(line, fd);
 	if (map_list == NULL)
-		free_and_error(map_data, "Reading map data");
+		free_and_error(map_data, "Parsing map file");
 	list_to_array(map_data, map_list);
-	// print_map(map_data);
-	// ft_printf("\n");
-	if (is_a_valid_map(map_data))
-		ft_printf("Map is valid\n");
-	else
-		ft_printf("Map is not valid\n");	
-	// print_map(map_data);
-	// ft_printf("\n");
-	// recreate_map(map_data);
-	// print_map(map_data);
+	if (!is_a_valid_map(map_data))
+		free_and_error(map_data, "Map is invalid");
 }
 
 void	init_map_data(t_map_data *map_data)
@@ -340,6 +354,7 @@ void	init_map_data(t_map_data *map_data)
 	map_data->start_y = -1;
 	map_data->map = NULL;
 	map_data->start = '\0';
+	ft_memset(map_data->keysym_states, 0, sizeof(map_data->keysym_states));
 }
 
 int main(int argc, char *argv[])
@@ -353,6 +368,7 @@ int main(int argc, char *argv[])
 	}
 	init_map_data(&map_data);
 	read_map_file(argv[1], &map_data);
+	print_map(&map_data);
 	init_player(&map_data);
 	initialize_mlx(&map_data);
 	mlx_loop_hook(map_data.mlx_ptr, &render, &map_data);

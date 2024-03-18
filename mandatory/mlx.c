@@ -37,18 +37,11 @@ void	initialize_mlx(t_map_data *map_data)
 {
 	map_data->mlx_ptr = mlx_init();
 	if (map_data->mlx_ptr == NULL)
-	{
-		ft_printf("Error: Mlx initialization error\n");
-		exit(MLX_ERROR);
-	}
+		free_and_error(map_data, "Mlx initialization error");
 	map_data->win_ptr = mlx_new_window(map_data->mlx_ptr, WINDOW_WIDTH,
 			WINDOW_HEIGHT, "Cub3d");
 	if (map_data->win_ptr == NULL)
-	{
-		free(map_data->win_ptr);
-		ft_printf("Error: Mlx window error\n");
-		exit(MLX_ERROR);
-	}
+		free_and_error(map_data, "Mlx window error");
 	map_data->img.mlx_img = mlx_new_image(map_data->mlx_ptr, WINDOW_WIDTH,
 			WINDOW_HEIGHT);
 	map_data->img.addr = mlx_get_data_addr(map_data->img.mlx_img,

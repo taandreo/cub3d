@@ -25,9 +25,6 @@
 // Window Params
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 900
-# define MAP_OFFSET 36
-// Mlx Error
-# define MLX_ERROR 1
 // Mlx Key Symbol
 # define XK_ESCAPE 0xff1b
 # define XK_W 0x77
@@ -65,8 +62,6 @@ typedef struct t_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-	double	height;
-	double	width;
 }	t_player;
 
 typedef struct s_img
