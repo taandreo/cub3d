@@ -7,3 +7,4 @@ compile_commands.json
 .clang-format
 .idea/
 cub3D
+.vscode
