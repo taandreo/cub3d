@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 20:10:51 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/16 20:54:36 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:15:08 by tairribe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,8 @@ void	free_and_error(t_map_data *map_data, char *msg)
 
 void	free_map_data(t_map_data *map_data)
 {
-	int	y;
-
-	y = 0;
-	while (map_data->map[y])
-	{
-		free(map_data->map[y]);
-		y++;
-	}
 	if (map_data->map)
-		free(map_data->map);
+		ft_freemt((void **) map_data->map);
 	if (map_data->tex.tex_file_north)
 		free(map_data->tex.tex_file_north);
 	if (map_data->tex.tex_file_south)
@@ -57,6 +49,5 @@ void	free_map_data(t_map_data *map_data)
 		free(map_data->tex.tex_file_east);
 	if (map_data->tex.tex_file_west)
 		free(map_data->tex.tex_file_west);
-	map_data->map = NULL;
 }
 

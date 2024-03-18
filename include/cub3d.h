@@ -6,7 +6,7 @@
 /*   By: tairribe <tairribe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/16 20:55:46 by tairribe         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:42:04 by tairribe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,15 @@ typedef struct s_map_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			start_x;
+	int			start_y;
+	char		start;
 	t_player	player;
 	t_img		img;
 	t_texture	tex;
 	char		**map;
 	int			map_rows;
+	int			*line_size;
 	t_bool		keysym_states[MAX_KEYS];
 	int			max_columns;
 	double		scale_factor;
@@ -203,3 +207,5 @@ int		open_file(char *filename);
 
 
 #endif
+
+void read_map_file(char *filename, t_map_data *map_data);
