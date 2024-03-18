@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 11:17:40 by ebezerra          #+#    #+#             */
-/*   Updated: 2024/03/18 11:45:03 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:09:15 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*free_then_gnl(char *line, int fd)
 
 void	*clear_list_return_null(t_list **map_list)
 {
-	ft_lstclear(&map_list, free);
+	ft_lstclear(map_list, free);
 	return (NULL);
 }
 
