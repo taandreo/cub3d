@@ -202,5 +202,6 @@ t_bool	is_empty(char *line);
 void	set_texture(char *line, t_map_data *map_data);
 t_bool	check_texture(t_map_data *map_data);
 int		to_rgb(char *line);
+void	kill_mlx_and_error(t_map_data *map_data, char *msg);
 
 #endif

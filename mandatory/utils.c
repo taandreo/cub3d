@@ -37,6 +37,12 @@ void	free_and_error(t_map_data *map_data, char *msg)
 	error_and_exit(msg);
 }
 
+void	kill_mlx_and_error(t_map_data *map_data, char *msg)
+{
+	ft_dprintf(STDERR_FILENO, "Error\n%s\n", msg);
+	kill_mlx(map_data);
+}
+
 void	free_map_data(t_map_data *map_data)
 {
 	if (map_data->map)
