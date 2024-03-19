@@ -1,6 +1,5 @@
 **/*.o
 objects/
-libft/
 cub3d
 compile_commands.json
 .cache/
