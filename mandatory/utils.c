@@ -47,6 +47,8 @@ void	free_map_data(t_map_data *map_data)
 {
 	if (map_data->map)
 		ft_freemt((void **) map_data->map);
+	if (map_data->line_size)
+		free(map_data->line_size);
 	if (map_data->tex.tex_file_north)
 		free(map_data->tex.tex_file_north);
 	if (map_data->tex.tex_file_south)

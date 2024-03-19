@@ -37,17 +37,19 @@ void	free_list(t_list *list)
 
 void	list_to_array(t_map_data *map_data, t_list *map_list)
 {
-	int	i;
+	int		i;
+	t_list	*current_map_list;
 
 	i = 0;
 	map_data->map_rows = ft_lstsize(map_list);
 	map_data->map = ft_calloc(map_data->map_rows + 1, sizeof(char *));
 	map_data->line_size = ft_calloc(map_data->map_rows, sizeof(int));
-	while (map_list)
+	current_map_list = map_list;
+	while (current_map_list)
 	{
-		map_data->map[i] = map_list->content;
-		map_data->line_size[i] = (int)ft_strlen(map_list->content);
-		map_list = map_list->next;
+		map_data->map[i] = current_map_list->content;
+		map_data->line_size[i] = (int)ft_strlen(current_map_list->content);
+		current_map_list = current_map_list->next;
 		i++;
 	}
 	free_list(map_list);
