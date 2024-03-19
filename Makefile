@@ -12,7 +12,7 @@ MLX_H := mlx.h
 # BONUS_DIR := bonus
 OBJS_DIR := objects
 BONUS_OBJS_DIR := bonus_objects
-INC_DIR := include 
+INC_DIR := include
 CFLAGS = -Wall -Wextra -Werror -g3
 UNAME := $(shell uname)
 LIBS := -lft -lmlx -lm -lX11 -lXext
@@ -100,7 +100,7 @@ libft:
 		echo lib directory created; \
 		echo ----------------------; \
 	fi
-	@if [ ! -e "$($INC_DIR)/libft.h" ] || [ ! -e "$(INC_DIR)/ft_printf.h" ]; then \
+	@if [ ! -e "$(INC_DIR)/libft.h" ] || [ ! -e "$(INC_DIR)/ft_printf.h" ]; then \
 		cp $(LIBFT_DIR)/include/libft.h $(INC_DIR); \
 		cp $(LIBFT_DIR)/include/ft_printf.h $(INC_DIR); \
 		echo ----------------------------------------------; \
@@ -122,13 +122,13 @@ mlx:
 		echo lib directory created; \
 		echo ----------------------; \
 	fi
-	@if [ ! -e "$($INC_DIR)/$(MLX_H)" ]; then \
+	@if [ ! -e "$(INC_DIR)/$(MLX_H)" ]; then \
 		cp $(MLX_DIR)/$(MLX_H) $(INC_DIR); \
 		echo ----------------------------------------------; \
 		echo libmlx header copied to \'include\' directory; \
 		echo ----------------------------------------------; \
 	fi
-	@if [ ! -e "$($LIBS_DIR)/$(MLX_NAME)" ]; then \
+	@if [ ! -e "$(LIBS_DIR)/$(MLX_NAME)" ]; then \
 		cp $(MLX_DIR)/$(MLX_NAME) $(LIBS_DIR); \
 		echo -------------------------------------; \
 		echo libmlx.a copied to \'lib\' directory; \
@@ -142,8 +142,8 @@ clean:
 	make clean -C $(MLX_DIR)
 
 fclean: clean
-	rm -f $(NAME) $(NAME_BONUS) $(LIBFT) include/libft.h
-	rm -f include/ft_printf.h include/mlx.h
+	rm -f $(NAME) $(NAME_BONUS) $(LIBFT) $(INC_DIR)/libft.h
+	rm -f $(INC_DIR)/ft_printf.h $(INC_DIR)/mlx.h
 	rm -rf $(LIBS_DIR)
 	@make fclean -C $(LIBFT_DIR)
 
