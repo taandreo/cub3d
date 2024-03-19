@@ -47,7 +47,7 @@ void	initialize_mlx(t_map_data *map_data)
 	if (map_data->mlx_ptr == NULL)
 		kill_mlx_and_error(map_data, "Mlx initialization error");
 	map_data->win_ptr = mlx_new_window(map_data->mlx_ptr, WINDOW_WIDTH,
-			WINDOW_HEIGHT, "Cub3d");
+			WINDOW_HEIGHT, "Cub3D");
 	if (map_data->win_ptr == NULL)
 		kill_mlx_and_error(map_data, "Mlx window error");
 	map_data->img.mlx_img = mlx_new_image(map_data->mlx_ptr, WINDOW_WIDTH,

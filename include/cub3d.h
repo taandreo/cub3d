@@ -6,7 +6,7 @@
 /*   By: ebezerra <ebezerra@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:12:53 by tairribe          #+#    #+#             */
-/*   Updated: 2024/03/18 11:31:02 by ebezerra         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:18:44 by ebezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
+# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
