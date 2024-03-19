@@ -87,6 +87,7 @@ void	init_map_data(t_map_data *map_data)
 	map_data->win_ptr = NULL;
 	map_data->img.mlx_img = NULL;
 	map_data->img.addr = NULL;
+	map_data->line_size = NULL;
 	map_data->start_x = -1;
 	map_data->start_y = -1;
 	map_data->map = NULL;
