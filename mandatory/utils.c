@@ -45,6 +45,17 @@ void	kill_mlx_and_error(t_map_data *map_data, char *msg)
 
 void	free_map_data(t_map_data *map_data)
 {
+	char *gnl;
+
+	if (map_data->fd != -1)
+	{
+		gnl = get_next_line(map_data->fd);
+		while (gnl)
+		{
+			free(gnl);
+			gnl = get_next_line(map_data->fd);
+		}
+	}
 	if (map_data->map)
 		ft_freemt((void **) map_data->map);
 	if (map_data->line_size)

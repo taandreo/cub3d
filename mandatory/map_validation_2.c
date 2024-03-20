@@ -12,17 +12,24 @@
 
 #include "cub3d.h"
 
-char	*free_then_gnl(char *line, int fd)
+char	*read_empty_lines(char *line, int fd)
 {
-	free(line);
-	return (get_next_line(fd));
+	while (is_empty(line))
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line);
 }
 
-void	*clear_list_return_null(t_list **map_list)
+void	*clear_list_return_null(t_list **map_list, char *line)
 {
+	if (line)
+		free(line);
 	ft_lstclear(map_list, free);
 	return (NULL);
 }
+
 
 t_list	*read_map_list(char *line, int fd)
 {
@@ -30,32 +37,29 @@ t_list	*read_map_list(char *line, int fd)
 	t_list	*map_list;
 
 	map_list = NULL;
-	if (line == NULL)
-		return (NULL);
-	while (is_empty(line))
-		line = free_then_gnl(line, fd);
+	line = read_empty_lines(line, fd);
 	while (line)
 	{
 		i = 0;
 		while (line[i] && ft_strchr("01NSEW ", line[i]))
 			i++;
 		if (!ft_strchr("\n\0", line[i]))
-			return (clear_list_return_null(&map_list));
+			return (clear_list_return_null(&map_list, line));
 		if (line[i] == '\n' && i != 0)
 			line[i] = '\0';
 		if (line[i] == '\n')
-			return (clear_list_return_null(&map_list));
+			return (clear_list_return_null(&map_list, line));
 		ft_lstadd_back(&map_list, ft_lstnew(line));
 		line = get_next_line(fd);
 	}
 	return (map_list);
 }
 
-char	*read_texture(t_map_data *map_data, int fd)
+char	*read_texture(t_map_data *map_data)
 {
 	char	*line;
 
-	line = get_next_line(fd);
+	line = get_next_line(map_data->fd);
 	while (!check_texture(map_data) && line)
 	{
 		if (is_texture(line))
@@ -73,7 +77,7 @@ char	*read_texture(t_map_data *map_data, int fd)
 			free_and_error(map_data, "Reading file");
 		}
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map_data->fd);
 	}
 	if (!check_texture(map_data))
 		free_and_error(map_data, "Texture or colors misconfiguration");

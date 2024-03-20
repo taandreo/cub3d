@@ -24,7 +24,7 @@ void	kill_mlx(t_map_data *map_data)
 		mlx_destroy_image(map_data->mlx_ptr, map_data->tex.texture_west);
 	if (map_data->img.mlx_img)
 		mlx_destroy_image(map_data->mlx_ptr, map_data->img.mlx_img);
-	if(map_data->win_ptr)
+	if (map_data->win_ptr)
 		mlx_destroy_window(map_data->mlx_ptr, map_data->win_ptr);
 	if (map_data->mlx_ptr)
 	{

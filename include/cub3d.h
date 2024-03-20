@@ -131,6 +131,7 @@ typedef struct s_map_data
 	char		**map;
 	int			map_rows;
 	int			*line_size;
+	int 		fd;
 	t_bool		keysym_states[MAX_KEYS];
 	int			x;
 }	t_map_data;
@@ -193,7 +194,7 @@ int		open_file(char *filename);
 void	read_map_file(char *filename, t_map_data *map_data);
 void	print_map(t_map_data *map_data);
 void	init_map_data(t_map_data *map_data);
-char	*read_texture(t_map_data *map_data, int fd);
+char	*read_texture(t_map_data *map_data);
 t_list	*read_map_list(char *line, int fd);
 void	list_to_array(t_map_data *map_data, t_list *map_list);
 t_bool	is_texture(char *texture);

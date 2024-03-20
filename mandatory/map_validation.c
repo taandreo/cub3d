@@ -89,15 +89,16 @@ t_bool	is_a_valid_map(t_map_data *map_data)
 
 void	read_map_file(char *filename, t_map_data *map_data)
 {
-	int		fd;
 	char	*line;
 	t_list	*map_list;
 
 	if (!ft_endswith(filename, ".cub"))
 		free_and_error(map_data, "Invalid file extension");
-	fd = open_file(filename);
-	line = read_texture(map_data, fd);
-	map_list = read_map_list(line, fd);
+	map_data->fd = open_file(filename);
+	line = read_texture(map_data);
+	if (!line)
+		free_and_error(map_data, "Missing Map");
+	map_list = read_map_list(line, map_data->fd);
 	if (map_list == NULL)
 		free_and_error(map_data, "Parsing map file");
 	list_to_array(map_data, map_list);

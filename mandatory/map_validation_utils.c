@@ -71,6 +71,9 @@ void	init_map_data(t_map_data *map_data)
 {
 	map_data->tex.ceiling_color = -1;
 	map_data->tex.floor_color = -1;
+	map_data->fd = -1;
+	map_data->start_x = -1;
+	map_data->start_y = -1;
 	map_data->tex.tex_file_east = NULL;
 	map_data->tex.tex_file_west = NULL;
 	map_data->tex.tex_file_north = NULL;
@@ -88,8 +91,6 @@ void	init_map_data(t_map_data *map_data)
 	map_data->img.mlx_img = NULL;
 	map_data->img.addr = NULL;
 	map_data->line_size = NULL;
-	map_data->start_x = -1;
-	map_data->start_y = -1;
 	map_data->map = NULL;
 	map_data->start = '\0';
 	ft_memset(map_data->keysym_states, 0, sizeof(map_data->keysym_states));
