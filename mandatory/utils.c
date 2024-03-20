@@ -45,7 +45,7 @@ void	kill_mlx_and_error(t_map_data *map_data, char *msg)
 
 void	free_map_data(t_map_data *map_data)
 {
-	char *gnl;
+	char	*gnl;
 
 	if (map_data->fd != -1)
 	{

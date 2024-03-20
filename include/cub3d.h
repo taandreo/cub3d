@@ -131,7 +131,7 @@ typedef struct s_map_data
 	char		**map;
 	int			map_rows;
 	int			*line_size;
-	int 		fd;
+	int			fd;
 	t_bool		keysym_states[MAX_KEYS];
 	int			x;
 }	t_map_data;

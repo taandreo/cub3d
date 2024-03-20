@@ -30,7 +30,6 @@ void	*clear_list_return_null(t_list **map_list, char *line)
 	return (NULL);
 }
 
-
 t_list	*read_map_list(char *line, int fd)
 {
 	size_t	i;

@@ -1,11 +1,12 @@
-NO ./img/redbrick.xpm
-WE ./img/greystone.xpm
-SO ./img/bluestone.xpm
-EA ./img/colorstone.xpm
+NO img/redbrick.xpm
+WE img/greystone.xpm
 
-C 200,200,200
-F 100,100,100
+SO img/bluestone.xpm
 
+EA img/colorstone.xpm
+
+C      200     ,      200      ,     200
+F      100     ,      100      ,     100
 
 
 
