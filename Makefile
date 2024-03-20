@@ -2,14 +2,14 @@
 
 CC = clang
 NAME = cub3D
-# NAME_BONUS = .minishell_bonus.txt
+NAME_BONUS = .cub3D_bonus.txt
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
 MANDATORY_DIR := mandatory
 MLX_DIR := minilibx-linux
 MLX_NAME := libmlx.a
 MLX_H := mlx.h
-# BONUS_DIR := bonus
+BONUS_DIR := bonus
 OBJS_DIR := objects
 BONUS_OBJS_DIR := bonus_objects
 INC_DIR := include
@@ -46,18 +46,36 @@ SRCS = $(addprefix $(MANDATORY_DIR)/, cub3d.c\
 					move_forward_backward.c\
 					calculate_rays_position.c)
 
-# BONUS = $(addprefix $(BONUS_DIR)/, minishell_bonus.c\
-			
-# 		)
+ BONUS = $(addprefix $(BONUS_DIR)/, cub3d_bonus.c\
+						mlx_bonus.c\
+						utils_bonus.c\
+						render_bonus.c\
+						movement_bonus.c\
+						key_events_bonus.c\
+						rotate_view_bonus.c\
+						img_pixel_put_bonus.c\
+						init_textures_bonus.c\
+						dda_algorithm_bonus.c\
+						map_validation_bonus.c\
+						map_validation_2_bonus.c\
+						init_player_data_bonus.c\
+						calculate_strafe_bonus.c\
+						vector_arithmetic_bonus.c\
+						map_texture_utils_bonus.c\
+						map_texture_utils_2_bonus.c\
+						map_validation_utils_bonus.c\
+						texture_calculations_bonus.c\
+						move_forward_backward_bonus.c\
+						calculate_rays_position_bonus.c)
 
 OBJS = $(patsubst $(MANDATORY_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
-# BONUS_OBJS = $(patsubst $(BONUS_DIR)%.c, $(BONUS_OBJS_DIR)%.o, $(BONUS))
+BONUS_OBJS = $(patsubst $(BONUS_DIR)%.c, $(BONUS_OBJS_DIR)%.o, $(BONUS))
 # All Src subdirectories
 SRC_SUBDIR := $(dir $(OBJS))
-# BONUS_SUBDIR := $(dir $(BONUS_OBJS))
+BONUS_SUBDIR := $(dir $(BONUS_OBJS))
 # Objects Subdirectories
 OBJS_SUBDIR := $(subst $(MANDATORY_DIR), $(OBJS_DIR), $(SRC_SUBDIR))
-# BONUS_OBJS_SUBDIR := $(subst $(BONUS_DIR), $(BONUS_OBJS_DIR), $(BONUS_SUBDIR))
+BONUS_OBJS_SUBDIR := $(subst $(BONUS_DIR), $(BONUS_OBJS_DIR), $(BONUS_SUBDIR))
 
 $(NAME): $(OBJS) | libft mlx
 	@if [ -d "$(BONUS_OBJS_DIR)" ]; then \
@@ -69,28 +87,28 @@ $(NAME): $(OBJS) | libft mlx
 	@echo cub3d binary created
 	@echo ________________________
 
-# $(NAME_BONUS): $(BONUS_OBJS) | libft
-# 	@if [ -d "$(OBJS_DIR)" ]; then \
-#       		rm -rf $(OBJS_DIR); \
-#       		rm -f $(NAME); \
-#     fi
-# 	@$(CC) $(CFLAGS) $(BONUS_OBJS) -o minishell -L$(LIB_DIRS) $(LIBS)
-# 	@touch $@
-# 	@echo ______________________________
-# 	@echo Minishell bonus binary created
-# 	@echo ______________________________
+$(NAME_BONUS): $(BONUS_OBJS) | libft mlx
+	@if [ -d "$(OBJS_DIR)" ]; then \
+           		rm -rf $(OBJS_DIR); \
+           		rm -f $(NAME); \
+        fi
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) -o cub3D -L$(LIBS_DIR) $(LIBS)
+	@touch $@
+	@echo ______________________________
+	@echo cub3D bonus binary created
+	@echo ______________________________
 
 $(OBJS_DIR)/%.o: $(MANDATORY_DIR)/%.c | libft mlx
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# $(BONUS_OBJS_DIR)/%.o: $(BONUS_DIR)/%.c
-# 	@mkdir -p $(@D)
-# 	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(INC_DIR) -c $< -o $@
+$(BONUS_OBJS_DIR)/%.o: $(BONUS_DIR)/%.c | libft mlx
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(INC_DIR) -c $< -o $@
 
 all: $(NAME)
 
-# bonus: $(NAME_BONUS)
+bonus: $(NAME_BONUS)
 
 libft:
 	make -C $(LIBFT_DIR)
